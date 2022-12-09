@@ -1,5 +1,114 @@
 {
-  "java.compile.nullAnalysis.mode": "automatic",
-  "java.configuration.updateBuildConfiguration": "interactive",
-  "java.debug.settings.onBuildFailureProceed": true
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "terminal.integrated.profiles.windows": {
+    "Git Bash": {
+      "path": "C:\\Program Files\\Git\\bin\\bash.exe"
+    }
+  },
+  "editor.suggestSelection": "first",
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "files.exclude": {
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true
+  },
+  "editor.tabSize": 4,
+  "editor.fontSize": 22,
+  "editor.fontLigatures": null,
+  "workbench.colorTheme": "Default Light+",
+  "java.project.importHint": false,
+  "redhat.telemetry.enabled": false,
+  "editor.formatOnSave": true,
+  "editor.fontFamily": "CookieRun, D2Coding, Consolas, 'Courier New', monospace",
+  "workbench.startupEditor": "none",
+  "explorer.compactFolders": false,
+  "workbench.iconTheme": "eq-material-theme-icons",
+  "emmet.variables": {
+    "lang": "ko"
+  },
+  "vsicons.dontShowNewVersionMessage": true,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.CustomBrowser": "chrome",
+  "html-css-class-completion.enableEmmetSupport": true,
+  "editor.tokenColorCustomizations": {
+    "comments": "#e50cf9"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "bracketPairColorizer.depreciation-notice": false,
+  "files.autoSave": "afterDelay",
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#3F708D",
+    "titleBar.inactiveBackground": "#3F708D"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "js/ts.implicitProjectConfig.strictNullChecks": true,
+  "peacock.favoriteColors": [
+    {
+      "name": "Angular Red",
+      "value": "#DD0531"
+    },
+    {
+      "name": "Azure Blue",
+      "value": "#007FFF"
+    },
+    {
+      "name": "JavaScript Yellow",
+      "value": "#F9E64F"
+    },
+    {
+      "name": "Mandalorian Blue",
+      "value": "#1857A4"
+    },
+    {
+      "name": "Node Green",
+      "value": "#215732"
+    },
+    {
+      "name": "React Blue",
+      "value": "#61DAFB"
+    },
+    {
+      "name": "Something Different",
+      "value": "#832561"
+    },
+    {
+      "name": "Svelte Orange",
+      "value": "#FF3D00"
+    },
+    {
+      "name": "Vue Green",
+      "value": "#42B883"
+    }
+  ],
+  "indentRainbow.colors": [
+    "rgba(255,255,64,0.07)",
+    "rgba(127,255,127,0.07)",
+    "rgba(255,127,255,0.07)",
+    "rgba(79,236,236,0.07)"
+  ],
+  "json.schemas": [],
+  "window.zoomLevel": 1,
+  "git.enableSmartCommit": true,
+  "settingsSync.ignoredExtensions": [],
+  "editor.codeActionsOnSave": {},
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "java.jdt.ls.java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.5.8-hotspot",
+  "java.configuration.runtimes": [],
+  "rsp-ui.enableStartServerOnActivation": [
+    {
+      "id": "redhat.vscode-community-server-connector",
+      "name": "Community Server Connector",
+      "startOnActivation": true
+    }
+  ],
+  "java.compile.nullAnalysis.mode": "disabled"
+  //"java.debug.settings.console": "internalConsole"
 }

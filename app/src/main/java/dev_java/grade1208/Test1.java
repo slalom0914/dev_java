@@ -1,22 +1,32 @@
 package dev_java.grade1208;
 
+import java.util.Scanner;
+
 public class Test1 {
-  //선언부
+    // 선언부
 
-  //메서스 선언
-  public void count() {
+    // 메서스 선언
+    public void count() {
+        System.out.println("count호출");// 로그에 출력할 값
+        Scanner s = new Scanner(System.in);
+        boolean isOk = false;
+        while (!isOk) {
+            System.out.print("문자열을 입력해 주세요. : ");
+            String str = s.nextLine();
+            if ("exit".equals(str)) {
+                break;// while문을 탈출하기
+            } else {
+                System.out.println(str.length() + "글자 입니다.");
+            }
+        } // end of while
+        s.close();
+        System.out.println("프로그램을 종료합니다.");
+    }// end of count()
 
-  }
-  //메인메소드
-  public static void main(String[] args) {
-    String s1 = new String("안녕");
-    String s2 = new String("안녕");
-    String s3 = "안녕";
-    String s4 = "안녕";
-    if(s1 == s2) System.out.println("주소번지가 같니?");
-    if(s1.equals(s2)) System.out.println("주소번지가 같니?");
-    if(s3 == s4) System.out.println("주소번지가 같니?");
-    if(s3.equals(s4)) System.out.println("주소번지가 같니?");
-    
-  }
+    // 메인메소드
+    public static void main(String[] args) {
+        Test1 t1 = new Test1();
+        t1.count();
+
+    }
 }
