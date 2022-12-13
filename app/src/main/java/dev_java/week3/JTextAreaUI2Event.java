@@ -17,7 +17,7 @@ public class JTextAreaUI2Event implements ActionListener {
 			// JTextField에 입력한 문자열 받기
 			String input = jUi2.jtf.getText();
 			jUi2.getTextArea().append("JTextAreaUI원본 : " + input + "\n");
-			jUi2.jtaUILogic.account(input);
+			//jUi2.jtaUILogic.account(input);
 			jUi2.jtf.setText("");
 		}
 	}
