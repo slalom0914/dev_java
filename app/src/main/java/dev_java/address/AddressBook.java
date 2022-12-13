@@ -73,7 +73,11 @@ public class AddressBook implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
-		if (obj == jmi_all) {// 전체조회-검색
+		if(obj == jmi_exit){
+			jf_addr.dispose();
+			//System.exit(0);
+		}
+		else if (obj == jmi_all) {// 전체조회-검색
 			String members[][] = {
 					{ "1", "이순신", "010-555-3434" }, { "2", "강감찬", "010-676-9988" }, { "3", "김춘추", "010-234-7766" }
 			};
@@ -97,11 +101,15 @@ public class AddressBook implements ActionListener {
 			});
 
 		} else if (obj == jbtn_ins) {// 너 입력버튼 누른거야?
-			aDialog.setDialog(jbtn_ins.getText(), true);
-		} else if (obj == jbtn_upd) {// 너 수정할거니?
-			aDialog.setDialog(jbtn_upd.getText(), true);
+			//aDialog.setDialog("입력", true);
+			aDialog.setDialog(jmi_ins.getText(), true);
+		}else if(obj == jmi_ins){
+			insertActionListener();
+		}
+		else if (obj == jbtn_upd) {// 너 수정할거니?
+			aDialog.setDialog(jmi_upd.getText(), true);
 		} else if (obj == jbtn_read) {// 너 상세보기 하려구?
-			aDialog.setDialog(jbtn_read.getText(), true);
+			aDialog.setDialog(jmi_read.getText(), true);
 		}
 
 	}
@@ -122,6 +130,8 @@ public class AddressBook implements ActionListener {
 		jtb.add(jbtn_upd);
 		jtb.add(jbtn_del);
 		jtb.add(jbtn_read);
+		jmi_ins.addActionListener(this);
+		jmi_exit.addActionListener(this);
 		jmi_all.addActionListener(this);// 이벤트소스와 이벤트 핸들러 클래스 매칭
 		jbtn_del.addActionListener(this);// 이벤트소스와 이벤트 핸들러 클래스 매칭
 		jbtn_ins.addActionListener(this);
@@ -143,6 +153,7 @@ public class AddressBook implements ActionListener {
 		jm_edit.add(jmi_del);
 		jm_edit.add(jmi_read);
 		jf_addr.setJMenuBar(jmb);
+		jf_addr.setIconImage(titlIcon.getImage());
 		jf_addr.setSize(500, 450);
 		jf_addr.setVisible(true);
 	}
@@ -153,5 +164,4 @@ public class AddressBook implements ActionListener {
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		new AddressBook();
 	}
-
 }

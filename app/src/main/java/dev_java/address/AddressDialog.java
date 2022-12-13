@@ -7,6 +7,9 @@ public class AddressDialog {
 
 	// System.exit(0); jf.dispose();
 	public AddressDialog() {
+		initDisplay();
+	}
+	public void initDisplay(){
 		jdg.setSize(400, 300);
 		jdg.setVisible(false);
 	}
