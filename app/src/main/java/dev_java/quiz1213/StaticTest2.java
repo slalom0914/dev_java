@@ -12,7 +12,7 @@ class S12 {
 	}
 }
 public class StaticTest2 {
-	public static void main(String[] args) {
+		public static void main(String[] args) {
 		// insert here
 		S11.i = 10;
 		S11 s1 = new S11();
