@@ -54,6 +54,35 @@ public class JTable7Dialog extends JDialog {
 		this.setVisible(true);
 	}
 
+	//각 컬럼(부서집합-부서번호,부서명,지역)의 값들을설정하거나
+	//읽어오는 getter/setter메소드 임
+	public String getDeptno(){
+		return jtf_deptno.getText();
+	}
+	public void setDeptno(String deptno){
+		jtf_deptno.setText(deptno);
+	}
+	public String getDname(){
+		return jtf_dname.getText();
+	}
+	public void setDname(String dname){
+		jtf_dname.setText(dname);
+	}
+	public String getLoc(){
+		return jtf_loc.getText();
+	}
+	public void setLoc(String loc){
+		jtf_loc.setText(loc);
+	}
+
+	public void setValue(String[] oneRow){
+		//입력을 위한 윈도우 설정 - 모든 값을 빈문자열로 셋팅함
+
+		//상세조회, 수정시는 배열로 받은 값으로 셋팅함
+
+
+	}//end of setValue
+
 	// 메인
 	public static void main(String[] args) {
 		new JTable7Dialog();
