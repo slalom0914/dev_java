@@ -47,6 +47,7 @@ public class VectorCRUD2 {
 			}
 		}
 		int result = 0;// 1이면 성공, 0이면 실패
+		here:
 		for(int i=0;i<vdept.size();i++){
 			String row[] = vdept.get(i);//i는 로우 인덱스이다
 			//if() 여기는 벡터에서 꺼낸 배열을 갖는다.
@@ -58,14 +59,20 @@ public class VectorCRUD2 {
 				System.out.println(deptno+", "+deptno2);
 				if(deptno==deptno2){// 10
 					String[] updRow = {oneRow[0], user_dname, user_loc};
-					vdept.remove(i);
-					vdept.add(i, updRow);
-					break;
+					//수정이라 말하고 입력으로 처리함 - 한 셀씩 수정하는것
+					vdept.remove(i);//i번째 자리를 삭제하고
+					//Vector를 사용하면 배열의 모든 단점을 보완함 - 고정, 타입단점
+					//Vector<Object>
+					vdept.add(i, updRow);//삭제된 자리에 추가함 - 배열의 장애 - int i[] = new int[3];
+					//break문만 사용시 이 중 for문에서 내부 for문만을 탈출하게 되는데 
+					//여기서는 외부 for문을 빠져나가야 하므로 라벨문을 붙여서 처리함
+					break here;
 				}else{
 					System.out.println("선택한 부서번호와 벡터에서 가져온 부서번호가 다르다");
 				}
-			}//end of String[]
-		}//end of Vector
+			}//end of String[] - inner for
+		}//end of Vector - 바깥쪽 for문에 라벨문을 사용할것.
+		getDeptList();
 		return result;
 	}
 
