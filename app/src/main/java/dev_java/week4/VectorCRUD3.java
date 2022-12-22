@@ -34,9 +34,40 @@ public class VectorCRUD3 {
 	 * @return 1이면 성공 0이면 수정실패
 	 ********************************************************************/
 	public int deptUpdate(DeptVO pdVO) {
+		System.out.println("deptUpdate 호출 :  입력받은 부서번호는 "+pdVO.getDeptno());
 		int result = 0;
 		// insert here
-
+		Scanner scan = new Scanner(System.in);
+		System.out.print("수정할 부서번호,부서명, 지역를 입력하세요.(구분은|연산자로 함)");
+		String user = scan.nextLine();// 10|인사부|포항
+		int user_deptno = 0;
+		String user_dname = null;
+		String user_loc = null;
+		StringTokenizer st = new StringTokenizer(user, "|");
+		user_deptno = Integer.parseInt(st.nextToken());// 사용자가 입력한 부서번호
+		user_dname = st.nextToken();// 사용자가 입력한 부서명
+		user_loc = st.nextToken();// 사용자가 입력한 지역
+		//사용자가 입력한 부서번호|부서명|지역 을 DeptVO의 멤버변수에 초기화 한것.
+		DeptVO updVO = 
+		DeptVO.builder().deptno(user_deptno).dname(user_dname).loc(user_loc).build();
+		//벡터에 들어있는 DeptVO에서 꺼낸 부서번호와 파라미터로 넘겨 받은 부서번호가 일치하면
+		//그 때 가져온 DeptVO의 인덱스가 우리가 삭제하고 추가해야 되는 벡터의 인덱스값이 된다.
+		DeptVO comVO = null;
+		for(int i=0;i<vdept.size();i++){
+			comVO = vdept.get(i);
+			//화면에서 받아온 DeptVO의 deptno와 벡터안에서 꺼내온 DeptVO의 deptno가
+			//같니?
+			if(updVO.getDeptno() == comVO.getDeptno()){
+				//화면에서 받아온 부서번호와 벡터에서 꺼낸 부서번호가 같은 때 그 때 i값이다.
+				vdept.remove(i);
+				vdept.add(i, updVO);
+				result = 1;
+				break;//벡터를 반복하는 for문 탈출
+			}else{
+				System.out.println("선택한 부서번호와 벡터에서 가져온 부서번호가 다르다.");
+			}
+			getDeptList();//새로고침 처리됨
+		}
 		return result;
 	}
 
@@ -67,18 +98,27 @@ public class VectorCRUD3 {
 		if (result1 == 1) {
 			JOptionPane.showMessageDialog(null, "등록이 되었습니다.");
 			vCrud.getDeptList();
-			return;//조건문안에 return문 해당 메소드 블록을 빠져나간다.
+			// return;//조건문안에 return문 해당 메소드 블록을 빠져나간다.
 		}
 		Scanner s = new Scanner(System.in);
-		System.out.print("수정할 부서번호,부서명, 지역를 입력하세요.(구분은|연산자로 함)");
-		String user = s.nextLine();// 10|인사부|포항
-		int user_deptno = 0;
-		String user_dname = null;
-		String user_loc = null;
-		StringTokenizer st = new StringTokenizer(user, "|");
-		user_deptno = Integer.parseInt(st.nextToken());// 사용자가 입력한 부서번호
-		user_dname = st.nextToken();// 사용자가 입력한 부서명
-		user_loc = st.nextToken();// 사용자가 입력한 지역
+		// 수정과 삭제 메뉴 선택 담기
+		int result2 = 0;// 수정 성공여부 담기 1이면 성공 0이면 실패
+		int choice = 0;// 디폴트
+		System.out.print("수정은 1, 삭제는 2를 입력하세요.");
+		choice = s.nextInt();
+		if (choice == 1) {
+			System.out.print("수정하고자 하는 부서번호를 입력하세요 ===> ");
+			int u_deptno = s.nextInt();
+			DeptVO updVO = DeptVO.builder().deptno(u_deptno).build();
+			result2 = vCrud.deptUpdate(updVO);
+			if (result2 == 1) {
+				System.out.println("수정처리 되었습니다.");
+				vCrud.getDeptList();
+			} else
+				System.out.println("수정실패 하였습니다.");
+		} else if (choice == 2) {
+			// vCrud.deptDelete(choice);
+		}
 		s.close();
 	}// end of main
 }

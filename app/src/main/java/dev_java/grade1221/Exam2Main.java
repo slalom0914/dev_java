@@ -1,14 +1,21 @@
 package dev_java.grade1221;
+
+import java.util.Scanner;
+
 //클래스 하나에 기능은 하나만...
 class Exam2{
 	public void methodA(){
-		System.out.println("methodA호출 성공");
-		//while문 사용시 무한루프 방지코드를 작성할 것.
-		//while문안에 증감연산자 있는지 파악할것.
-		while(0<2){
-			if(2==2) break;
+		//절차적 사고 - 스토리텔링 - 소통 - 파라미터와 리턴타입
+		System.out.print("수정이면 1, 삭제이면 2를 누르세요.");
+		Scanner s = new Scanner(System.in);
+		int choice = 0;
+		choice = s.nextInt();
+		if(choice >2 || choice < 0 ){
+			System.out.println("1 혹은 2 중에서 입력하세요.");
+			//return;
+		}else{
+			System.out.println("정상인 경우");
 		}
-		//여기 오고 싶은데.....
 	}
 }
 
