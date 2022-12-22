@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import dev_java.week4.DeptVO;
 
 //JDialog도 디폴트가 BorderLayout임 - jp_center 를 중앙배치
 public class JTable7Dialog extends JDialog implements ActionListener {
@@ -28,12 +29,13 @@ public class JTable7Dialog extends JDialog implements ActionListener {
 	// jp_south 속지
 	JButton jbtn_save = new JButton("저장");
 	JButton jbtn_close = new JButton("닫기");
-	//왜 null을 주는지 설명할 수 있다
-	String[] oneRow = null;
+	// 왜 null을 주는지 설명할 수 있다
+	DeptVO pdVO = null;
+
 	// 생성자
 	public JTable7Dialog() {
 	}
-	
+
 	public JTable7Dialog(DeptTable7 deptTable7) {
 		this.deptTable7 = deptTable7;
 		initDisplay();
@@ -65,50 +67,57 @@ public class JTable7Dialog extends JDialog implements ActionListener {
 		this.setVisible(false);
 	}
 
-	//각 컬럼(부서집합-부서번호,부서명,지역)의 값들을설정하거나
-	//읽어오는 getter/setter메소드 임
-	public String getDeptno(){
+	// 각 컬럼(부서집합-부서번호,부서명,지역)의 값들을설정하거나
+	// 읽어오는 getter/setter메소드 임
+	public String getDeptno() {
 		return jtf_deptno.getText();
 	}
-	public void setDeptno(String deptno){
+
+	public void setDeptno(String deptno) {
 		jtf_deptno.setText(deptno);
 	}
-	public String getDname(){
+
+	public String getDname() {
 		return jtf_dname.getText();
 	}
-	public void setDname(String dname){
+
+	public void setDname(String dname) {
 		jtf_dname.setText(dname);
 	}
-	public String getLoc(){
+
+	public String getLoc() {
 		return jtf_loc.getText();
 	}
-	public void setLoc(String loc){
+
+	public void setLoc(String loc) {
 		jtf_loc.setText(loc);
 	}
-	//아래 메소드는 DeptTable7에서 호출됨
-	//actionPerformed에서 이벤트(입력,수정,상세보기)가 발생되면 호출됨
-	//메소드의 파라미터 자리는 Call by Value에 의해서 결정됨
-	public void set(String title, boolean isView, String[] oneRow){
+
+	// 아래 메소드는 DeptTable7에서 호출됨
+	// actionPerformed에서 이벤트(입력,수정,상세보기)가 발생되면 호출됨
+	// 메소드의 파라미터 자리는 Call by Value에 의해서 결정됨
+	public void set(String title, boolean isView, DeptVO pdVO) {
 		this.setTitle(title);
 		this.setVisible(isView);
-		this.oneRow = oneRow;
-		setValue(oneRow);
+		this.pdVO = pdVO;
+		setValue(pdVO);
 	}
-	public void setValue(String[] oneRow){//이런 공통코드를 나는 작성할 수 있다.
-		//입력을 위한 윈도우 설정 - 모든 값을 빈문자열로 셋팅함
-		if(oneRow == null){
+
+	public void setValue(DeptVO pdVO) {// 이런 공통코드를 나는 작성할 수 있다.
+		// 입력을 위한 윈도우 설정 - 모든 값을 빈문자열로 셋팅함
+		if (pdVO == null) {
 			setDeptno("");
 			setDname("");
 			setLoc("");
 		}
-		//상세조회, 수정시는 배열로 받은 값으로 셋팅함
-		//부모창에서 set메소드 호출시 파라미터로 넘겨준 값으로 초기화할것.
-		else{
-			setDeptno(oneRow[0]);
-			setDname(oneRow[1]);
-			setLoc(oneRow[2]);
+		// 상세조회, 수정시는 배열로 받은 값으로 셋팅함
+		// 부모창에서 set메소드 호출시 파라미터로 넘겨준 값으로 초기화할것.
+		else {
+			setDeptno(String.valueOf(pdVO.getDeptno()));
+			setDname(pdVO.getDname());
+			setLoc(pdVO.getLoc());
 		}
-	}//end of setValue
+	}// end of setValue
 
 	// 메인
 	public static void main(String[] args) {
@@ -118,21 +127,20 @@ public class JTable7Dialog extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
-		if(obj == jbtn_save){
-			//oneRow가 존재하면 수정모드, 그렇지 않으면 입력모드로 함
-			if(oneRow !=null){
+		if (obj == jbtn_save) {
+			// oneRow가 존재하면 수정모드, 그렇지 않으면 입력모드로 함
+			if (pdVO != null) {
 
-			}else{
-				String[] oneRow = { getDeptno(), getDname(), getLoc()};
-				System.out.println(oneRow[0]+", "+oneRow[1]+", "+oneRow[2]);
-				System.out.println("before : "+DeptTable7.vdata.size());
-				DeptTable7.vdata.add(oneRow);
-				System.out.println("after : "+DeptTable7.vdata.size());
+			} else {
+				DeptVO insVO = DeptVO.builder().deptno(Integer.parseInt(getDeptno())).dname(getDname()).loc(getLoc()).build();
+				System.out.println("before : " + DeptTable7.vdata.size());
+				DeptTable7.vdata.add(insVO);
+				System.out.println("after : " + DeptTable7.vdata.size());
 				deptTable7.refreshData();
 				this.dispose();
 			}
 		}
-		
+
 	}
 
 }

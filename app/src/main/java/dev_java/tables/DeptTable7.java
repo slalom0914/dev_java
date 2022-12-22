@@ -13,6 +13,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
+import dev_java.week4.DeptVO;
 
 public class DeptTable7 extends JFrame implements ActionListener {
 	// 선언부
@@ -41,7 +42,7 @@ public class DeptTable7 extends JFrame implements ActionListener {
 	JButton jbtn_upd = new JButton("수정");
 	JButton jbtn_del = new JButton("삭제");
 	JButton jbtn_det = new JButton("상세보기");
-	static Vector<String[]> vdata = new Vector<>();//vdata.size() = 0;
+	static Vector<DeptVO> vdata = new Vector<>();// vdata.size() = 0;
 
 	// 생성자
 	public DeptTable7() {
@@ -79,54 +80,58 @@ public class DeptTable7 extends JFrame implements ActionListener {
 
 	// 새로고침 - Vector에 담긴 String[]출력하기
 	// 입력, 수정화면에서 저장 버튼 누르면 Vector에 String[] 추가하고
-	//그 다이얼로그 화면은 닫히고 부모창은 새로고침 처리한다
-	//그러니까 다이얼로그창에서 부모클래스의 refreshData메소드를 호출해야 함
-	//그러니까 인스턴스화 할 때 파라미터에 this를 넘겨서 사용할 수 있도록 할것(NullPointerException)
+	// 그 다이얼로그 화면은 닫히고 부모창은 새로고침 처리한다
+	// 그러니까 다이얼로그창에서 부모클래스의 refreshData메소드를 호출해야 함
+	// 그러니까 인스턴스화 할 때 파라미터에 this를 넘겨서 사용할 수 있도록 할것(NullPointerException)
 	public void refreshData() {
 		System.out.println("refreshData 호출");
-		//입력,수정 전에 조회된 정보는 삭제함
-		while(dtm_dept.getRowCount() > 0){
+		// 입력,수정 전에 조회된 정보는 삭제함
+		while (dtm_dept.getRowCount() > 0) {
 			dtm_dept.removeRow(0);
 		}
-		if(DeptTable7.vdata.size() <=0){
+		if (DeptTable7.vdata.size() <= 0) {
 			JOptionPane.showMessageDialog(this, "조회결과가 없습니다.", "WARN", JOptionPane.WARNING_MESSAGE);
-			return;//refreshData()탈출
+			return;// refreshData()탈출
 		}
-		System.out.println("DeptTable7 : "+vdata.size());
-		//벡터의 크기만큼 반복하면서 dtm_dept 데이터셋에 String[]추가함
-		for(int i=0;i<vdata.size();i++){
-			String[] oneRow = vdata.get(i);
-			dtm_dept.addRow(oneRow);
+		System.out.println("DeptTable7 : " + vdata.size());
+		// 벡터의 크기만큼 반복하면서 dtm_dept 데이터셋에 String[]추가함
+		for (int i = 0; i < vdata.size(); i++) {
+			DeptVO oneRow = vdata.get(i);
+			Vector<Object> vone = new Vector<>();
+			vone.add(oneRow.getDeptno());
+			vone.add(oneRow.getDname());
+			vone.add(oneRow.getLoc());
+			dtm_dept.addRow(vone);
 		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
-		//조회 할거야?
-		if(obj == jbtn_sel){
+		// 조회 할거야?
+		if (obj == jbtn_sel) {
 			refreshData();
 		}
-		//너 입력 버튼 누른거야?
-		else if(obj == jbtn_ins){
-			jtd7.set("입력",true,null);
+		// 너 입력 버튼 누른거야?
+		else if (obj == jbtn_ins) {
+			jtd7.set("입력", true, null);
 		}
-		//너 수정 할려구?
-		else if(obj == jbtn_upd){
-			//어떤 로우를 수정할거니?
-			//JTable목록에서 선택한 로우의 index를 값을 가져옴
+		// 너 수정 할려구?
+		else if (obj == jbtn_upd) {
+			// 어떤 로우를 수정할거니?
+			// JTable목록에서 선택한 로우의 index를 값을 가져옴
 			int index = jtb_dept.getSelectedRow();
-			//데이셋객체로 벡터를 사용중이니 벡터에서 꺼낸 값을 String[]초기화
-			//테이블의 양식 폼인 JTable 이벤트로 얻어옴
-			String[] oneRow = vdata.get(index);
-			jtd7.set("수정",true,oneRow);
-			
-		}
-		//너 상세보기 원해?
-		else if(obj == jbtn_det){
+			// 데이셋객체로 벡터를 사용중이니 벡터에서 꺼낸 값을 String[]초기화
+			// 테이블의 양식 폼인 JTable 이벤트로 얻어옴
+			DeptVO pdVO = vdata.get(index);
+			jtd7.set("수정", true, pdVO);
 
-			//jtd7.set("상세보기",true,데이터로우값-String[]);
- 
+		}
+		// 너 상세보기 원해?
+		else if (obj == jbtn_det) {
+
+			// jtd7.set("상세보기",true,데이터로우값-String[]);
+
 		}
 
 	}

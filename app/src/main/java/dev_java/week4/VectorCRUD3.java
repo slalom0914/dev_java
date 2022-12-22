@@ -1,6 +1,5 @@
 package dev_java.week4;
 
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -8,6 +7,7 @@ import javax.swing.JOptionPane;
 
 public class VectorCRUD3 {
 	static Vector<DeptVO> vdept = new Vector<>();
+	static Scanner s = new Scanner(System.in);
 
 	public void getDeptList() {
 		for (int i = 0; i < vdept.size(); i++) {
@@ -33,16 +33,19 @@ public class VectorCRUD3 {
 	 * @param user_loc   수정하고자 하는 지역
 	 * @return 1이면 성공 0이면 수정실패
 	 ********************************************************************/
-	public int deptUpdate(DeptVO pdVO) {
+	public int deptUpdate(DeptVO pdVO) {//내안에는 부서번호 10만 있음 null
 		System.out.println("deptUpdate 호출 :  입력받은 부서번호는 "+pdVO.getDeptno());
 		int result = 0;
 		// insert here
-		Scanner scan = new Scanner(System.in);
+		//Scanner scan = new Scanner(System.in);//사용자가 입력한 정보를 받기 위해 선언
 		System.out.print("수정할 부서번호,부서명, 지역를 입력하세요.(구분은|연산자로 함)");
-		String user = scan.nextLine();// 10|인사부|포항
-		int user_deptno = 0;
-		String user_dname = null;
-		String user_loc = null;
+		VectorCRUD3.s = null;
+		VectorCRUD3.s = new Scanner(System.in );
+		String user = VectorCRUD3.s.nextLine();// 10|인사부|포항 -> 10 개발부 인천
+		int user_deptno = 0;//사용자가 입력한 부서번호담기
+		String user_dname = null;//사용자가 입력한 부서명 담기
+		String user_loc = null;//사용자가 입력한 지역 담기
+		//문자열 3개를 한번에 받아오기 위해 StringTokenizer사용함 - 메신저개발
 		StringTokenizer st = new StringTokenizer(user, "|");
 		user_deptno = Integer.parseInt(st.nextToken());// 사용자가 입력한 부서번호
 		user_dname = st.nextToken();// 사용자가 입력한 부서명
@@ -72,8 +75,18 @@ public class VectorCRUD3 {
 	}
 
 	public int deptDelete(int deptno) {
-		System.out.println("부서 정보 삭제 호출");
+		System.out.println("부서 정보 삭제 호출"+ deptno);
 		int result = 0;
+		for(int i=0;i<vdept.size();i++){//데이터 영속성을 지원하는 오라클이 없어서 벡터로 대신함
+			DeptVO rdVO = vdept.get(i);
+			int deptno2 = 0;
+			deptno2 = rdVO.getDeptno();
+			System.out.println("입력받은 값과 벡터에서 가져온 값을 비교함 : "+deptno+", "+deptno2);
+			if(deptno == deptno2){//파라미터로 넘어온 부서번호와 벡터에서 꺼낸 부서번호를 비교
+				DeptVO rmVO = vdept.remove(i);
+				if(rmVO !=null) result =1;
+			}
+		}
 		return result;
 	}//// end of deptDelete
 
@@ -100,25 +113,37 @@ public class VectorCRUD3 {
 			vCrud.getDeptList();
 			// return;//조건문안에 return문 해당 메소드 블록을 빠져나간다.
 		}
-		Scanner s = new Scanner(System.in);
+		//전체 조회가 출력됨
+		//Scanner s = new Scanner(System.in);
 		// 수정과 삭제 메뉴 선택 담기
 		int result2 = 0;// 수정 성공여부 담기 1이면 성공 0이면 실패
 		int choice = 0;// 디폴트
-		System.out.print("수정은 1, 삭제는 2를 입력하세요.");
-		choice = s.nextInt();
-		if (choice == 1) {
-			System.out.print("수정하고자 하는 부서번호를 입력하세요 ===> ");
-			int u_deptno = s.nextInt();
+		System.out.print("수정은 1, 삭제는 2를 입력하세요.");//수정 1
+		choice = VectorCRUD3.s.nextInt();//1 담김
+		if (choice == 1) {//너 수정을 원해? true이면 아래코드 실행
+			System.out.print("수정하고자 하는 부서번호를 입력하세요 ===> ");//10 혹은 20 둘중 하나
+			int u_deptno = VectorCRUD3.s.nextInt();//10번 입력 했다고 가정
+			//담을 수 있는 값은 부서번호 10뿐이다 dname에는 또 loc에는 뭐가 들어있죠? null이다
 			DeptVO updVO = DeptVO.builder().deptno(u_deptno).build();
-			result2 = vCrud.deptUpdate(updVO);
+			result2 = vCrud.deptUpdate(updVO);//DeptVO 파라미터로 넘김 - 메인메소드결정됨 - 10만있음
 			if (result2 == 1) {
 				System.out.println("수정처리 되었습니다.");
 				vCrud.getDeptList();
 			} else
 				System.out.println("수정실패 하였습니다.");
 		} else if (choice == 2) {
-			// vCrud.deptDelete(choice);
+			System.out.print("삭제하고자 하는 부서번호를 입력하세요 ===> ");
+			VectorCRUD3.s = null;
+			VectorCRUD3.s = new Scanner(System.in );			
+			int d_deptno = VectorCRUD3.s.nextInt();
+			int result3 = vCrud.deptDelete(d_deptno);
+			if(result3 == 1){
+				System.out.println("삭제 처리 되었습니다.");
+				vCrud.getDeptList();
+			}else{
+				System.out.println("삭제 실패하였습니다.");
+			}
 		}
-		s.close();
+		VectorCRUD3.s.close();
 	}// end of main
 }
