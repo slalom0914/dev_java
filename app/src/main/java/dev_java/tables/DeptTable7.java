@@ -114,7 +114,7 @@ public class DeptTable7 extends JFrame implements ActionListener {
 		}
 		// 너 입력 버튼 누른거야?
 		else if (obj == jbtn_ins) {
-			jtd7.set("입력", true, null);
+			jtd7.set("입력", true, null, true);
 		}
 		// 너 수정 할려구?
 		else if (obj == jbtn_upd) {
@@ -124,14 +124,19 @@ public class DeptTable7 extends JFrame implements ActionListener {
 			// 데이셋객체로 벡터를 사용중이니 벡터에서 꺼낸 값을 String[]초기화
 			// 테이블의 양식 폼인 JTable 이벤트로 얻어옴
 			DeptVO pdVO = vdata.get(index);
-			jtd7.set("수정", true, pdVO);
+			jtd7.set("수정", true, pdVO, true);
 
 		}
 		// 너 상세보기 원해?
 		else if (obj == jbtn_det) {
-
-			// jtd7.set("상세보기",true,데이터로우값-String[]);
-
+			int index = jtb_dept.getSelectedRow();
+			if (index ==-1) {//-1은 end of file의미. 끝까지 다 찾았는데 없다
+				JOptionPane.showMessageDialog(this, "상세보기 할 거를 선택해줘.");
+				return;// actionPerformed탈출함
+			}
+			// 벡터안에서 사용자가 선택한 DeptVO를 찾아야 하니까..... 그러니까 선택하라구.
+			DeptVO pdVO = vdata.get(index);
+			jtd7.set("상세보기", true, pdVO, false);
 		}
 
 	}
