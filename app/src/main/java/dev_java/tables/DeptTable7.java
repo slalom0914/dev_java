@@ -23,7 +23,7 @@ public class DeptTable7 extends JFrame implements ActionListener {
 	// :JTable7Dialog에서 부서번호,부서명,지역을 입력한 후 저장버튼을 누르면
 	// :Vector<String[]>추가하고 추가된 로우를 포함하는 Vector가 부모창에
 	// 새로 리플래쉬(재사용되어야함-이건 부모클래스에구현함) 되어야 하니까....호출해야함.
-	JTable7Dialog jtd7 = new JTable7Dialog(this);
+	JTable7Dialog jtd7 = new JTable7Dialog(this);// 이른인스턴스화
 	String header[] = { "부서번호", "부서명", "지역" };
 	String datas[][] = new String[0][3];
 	// this는 사용되는 클래스 영역에서 선언된 클래스를 가리킨다
@@ -130,13 +130,23 @@ public class DeptTable7 extends JFrame implements ActionListener {
 		// 너 상세보기 원해?
 		else if (obj == jbtn_det) {
 			int index = jtb_dept.getSelectedRow();
-			if (index ==-1) {//-1은 end of file의미. 끝까지 다 찾았는데 없다
+			if (index == -1) {// -1은 end of file의미. 끝까지 다 찾았는데 없다
 				JOptionPane.showMessageDialog(this, "상세보기 할 거를 선택해줘.");
 				return;// actionPerformed탈출함
 			}
 			// 벡터안에서 사용자가 선택한 DeptVO를 찾아야 하니까..... 그러니까 선택하라구.
 			DeptVO pdVO = vdata.get(index);
 			jtd7.set("상세보기", true, pdVO, false);
+		}
+		// 너 삭제할거야?
+		else if (obj == jbtn_del) {
+			int index = jtb_dept.getSelectedRow();
+			if (index == -1) {// -1은 end of file의미. 끝까지 다 찾았는데 없다
+				JOptionPane.showMessageDialog(this, "삭제 할 거를 선택해줘.");
+				return;// actionPerformed탈출함
+			}
+			vdata.remove(index);
+			refreshData();
 		}
 
 	}
