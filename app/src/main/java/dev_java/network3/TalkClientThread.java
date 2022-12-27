@@ -1,7 +1,7 @@
 package dev_java.network3;
 
 import java.util.StringTokenizer;
-import java.util.Vector;​
+import java.util.Vector;
 
 public class TalkClientThread extends Thread {
 	TalkClient tc = null;

@@ -5,8 +5,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.StringTokenizer;
 
-public class TalkServerThread extends Thread {
-	TalkServer ts = null;
+public class TalkServerThread2 extends Thread {
+	TalkServer2 ts = null;
 	Socket client = null;
 	ObjectOutputStream oos = null;
 	ObjectInputStream ois = null;
@@ -14,23 +14,23 @@ public class TalkServerThread extends Thread {
 	String chatName = null;
 
 	// 생성자
-	public TalkServerThread() {
+	public TalkServerThread2() {
 	}
 
-	public TalkServerThread(TalkServer ts) {
+	public TalkServerThread2(TalkServer2 ts) {// TalkServer2가 TalkServer2에서 this이었다
 		this.ts = ts;
 		this.client = ts.socket;
 		try {
 			oos = new ObjectOutputStream(client.getOutputStream());// 말하기
 			ois = new ObjectInputStream(client.getInputStream());// 듣기
-			//100#tomato
+			// 100#tomato
 			String msg = (String) ois.readObject();
 			ts.jta_log.append(msg + "\n");
 			StringTokenizer st = new StringTokenizer(msg, "#");
 			st.nextToken();// 100 skip처리
 			chatName = st.nextToken();// 토마토 저장
 			ts.jta_log.append(chatName + "님이 입장하였습니다.\n");
-			for (TalkServerThread tst : ts.globalList) {
+			for (TalkServerThread2 tst : ts.globalList) {
 				this.send(Protocol.TALK_IN + Protocol.separator + tst.chatName);
 			}
 			// 현재 서버에 입장한 클라이언트 스레드 추가하기
@@ -43,7 +43,7 @@ public class TalkServerThread extends Thread {
 
 	// 현재 입장해 있는 친구들 모두에게 메시지 전송하기 구현
 	public void broadCasting(String msg) {
-		for (TalkServerThread tst : ts.globalList) {
+		for (TalkServerThread2 tst : ts.globalList) {
 			tst.send(msg);
 		}
 	}
@@ -74,44 +74,45 @@ public class TalkServerThread extends Thread {
 					protocol = Integer.parseInt(st.nextToken());// 100
 				}
 				switch (protocol) {
-				case Protocol.MESSAGE: {
-					String nickName = st.nextToken();
-					String message = st.nextToken();
-					broadCasting(Protocol.MESSAGE + Protocol.separator + nickName + Protocol.separator + message);
-				}
-					break;
-				case Protocol.WHISPER: {
-					String nickName = st.nextToken();// 보내는 넘
-					// insert here - 받는 넘
-					String otherName = st.nextToken();// 보내는 넘
-					// 귓속말로 보내진 메시지
-					String msg1 = st.nextToken();
-					for (TalkServerThread cst : ts.globalList) {
-						if (otherName.equals(cst.chatName)) {
-							cst.send(Protocol.WHISPER + Protocol.separator + nickName + Protocol.separator + otherName
-									+ Protocol.separator + msg1);
-							break;
-						}
-					} // end of for
-					this.send(Protocol.WHISPER + Protocol.separator + nickName + Protocol.separator + otherName
-							+ Protocol.separator + msg1);
-				}
-					break;
-				case Protocol.CHANGE: {
-					String nickName = st.nextToken();
-					String afterName = st.nextToken();
-					String message = st.nextToken();
-					this.chatName = afterName;
-					broadCasting(Protocol.CHANGE + Protocol.separator + nickName + Protocol.separator + afterName
-							+ Protocol.separator + message);
-				}
-					break;
-				case Protocol.TALK_OUT: {
-					String nickName = st.nextToken();
-					ts.globalList.remove(this);
-					broadCasting(Protocol.TALK_OUT + Protocol.separator + nickName);
-				}
-					break run_start;
+					case Protocol.MESSAGE: {
+						String nickName = st.nextToken();
+						String message = st.nextToken();
+						broadCasting(Protocol.MESSAGE + Protocol.separator + nickName + Protocol.separator + message);
+					}
+						break;
+					case Protocol.WHISPER: {
+						String nickName = st.nextToken();// 보내는 넘
+						// insert here - 받는 넘
+						String otherName = st.nextToken();// 보내는 넘
+						// 귓속말로 보내진 메시지
+						String msg1 = st.nextToken();
+						for (TalkServerThread cst : ts.globalList) {
+							if (otherName.equals(cst.chatName)) {
+								cst.send(Protocol.WHISPER + Protocol.separator + nickName + Protocol.separator
+										+ otherName
+										+ Protocol.separator + msg1);
+								break;
+							}
+						} // end of for
+						this.send(Protocol.WHISPER + Protocol.separator + nickName + Protocol.separator + otherName
+								+ Protocol.separator + msg1);
+					}
+						break;
+					case Protocol.CHANGE: {
+						String nickName = st.nextToken();
+						String afterName = st.nextToken();
+						String message = st.nextToken();
+						this.chatName = afterName;
+						broadCasting(Protocol.CHANGE + Protocol.separator + nickName + Protocol.separator + afterName
+								+ Protocol.separator + message);
+					}
+						break;
+					case Protocol.TALK_OUT: {
+						String nickName = st.nextToken();
+						ts.globalList.remove(this);
+						broadCasting(Protocol.TALK_OUT + Protocol.separator + nickName);
+					}
+						break run_start;
 				}///////////// end of switch
 			} ///////////////// end of while
 		} catch (Exception e) {
