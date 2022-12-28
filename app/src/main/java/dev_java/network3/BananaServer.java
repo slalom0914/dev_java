@@ -19,6 +19,7 @@ public class BananaServer extends JFrame {
 		this.setSize(400, 300);
 		this.setVisible(true);
 	}
+
 	public void initDisplay() {
 		this.setTitle("바나나톡");
 		this.setSize(400, 300);

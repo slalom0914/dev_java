@@ -8,14 +8,13 @@ public class BananaServer3 extends JFrame {
 	BananaServer3() {
 		initDisplay();
 	}
-
 	BananaServer3(String title) {
-		this.title = title;
+		//생성자 호출(1-2)대신에 지변을 전변으로 초기화 해서 문제를 해결함. 
+		this.title = title;//파라미터로 넘어온 타이틀이 전변에 치환됨.-초기화
 		initDisplay();
 		// 아래서 this는 BananaServer를 가리키는 것임
 		// this(title);자기자신을 호출하는 것이므로 에러임
 	}
-
 	public void initDisplay() {
 		this.setTitle(title);
 		this.setSize(400, 300);
