@@ -24,7 +24,7 @@ dependencies {
     implementation 'com.oracle.database.jdbc:ojdbc8:21.8.0.0'
     implementation 'com.oracle.database.nls:orai18n:21.8.0.0'
     compileOnly 'org.projectlombok:lombok:1.18.24'  
-
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.7.7'
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.1.1-jre'
 }
