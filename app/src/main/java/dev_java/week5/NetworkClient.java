@@ -9,7 +9,7 @@ public class NetworkClient {
 		String serverIP = null;
 		try {
 			serverIP = InetAddress.getLocalHost().getHostAddress();
-			Socket socket = new Socket(serverIP, port);
+			Socket socket = new Socket("192.168.10.47", port);
 			System.out.println("NetworkClient socket " + socket);
 		} catch (Exception e) {
 			System.out.println("NetworkClient client " + e.getMessage());

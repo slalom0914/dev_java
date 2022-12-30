@@ -10,7 +10,7 @@ public class FileOutput {
 		FileOutputStream fos = null;
 		try {
 			fos = new FileOutputStream("E:\\vscode_java\\dev_java\\app\\src\\main\\java\\dev_java\\week5\\test.txt",true);
-			out = new OutputStreamWriter(fos, "UTF-8");
+			out = new OutputStreamWriter(fos, "UTF-8");//한글처리지원
 			out.write("hello");
 			out.write(" java");
 			out.close();

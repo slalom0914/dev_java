@@ -123,12 +123,18 @@ public class DBConnectionMgr {
 /*
  * JDBC API를 이용하여 DB연동하기
  * 1. 각 제조사가 제공하는 드라이버 클래스를 로딩한다.(ojdbc6.jar)
+ * Class.forName(드라이버 클래스적음-풀네임);
  * 2. 물리적으로 떨어져 있는 오라클 서버와 연결 통로를 확보 한다.
+ * Connection은 인터페이스이다. - 오른쪽에 구현체클래스가 와야 한다.
+ * 
+ * Connection con = DriverManager.getConnection(URL,"scott","tiger");
  * 3. DML문을 자바에서 오라클 서버로 전달해 줄 인터페이스를 생성한다.(Statement:정적쿼리문,
  * PreparedStatement:동적쿼리문지원)
+ * 
  * 4. SELECT문의 경우 오라클 서버에서 제공하는 커서를 지원 하는 ResultSet 인터페이스를 활용하여
  * 테이블에 제공되는 커서를 조작하여 해당 로우에 데이터가 존재하면 Cursor....open...fetch과정을 통해서
  * 오라클 서버로 부터 데이터를 꺼내서 List<DeptVO>에 담을 수 있다.
+ * 
  * 주의 : INSERT, UPDATE, DELETE 에서는 커서가 필요없음 - commit, rollback
  * 리턴값은 int 임
  * 이것들을 요청할 때는 executeUpdate(INSERT문 or UPDATE or DELETE문)

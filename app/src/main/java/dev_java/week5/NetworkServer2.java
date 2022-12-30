@@ -9,8 +9,9 @@ public class NetworkServer2 {
 	public void server() {
 		int port = 3000;
 		ServerSocket server = null;
-		ObjectOutputStream oos = null;
-		ObjectInputStream ois = null;
+		ObjectOutputStream oos = null;//말하기
+		ObjectInputStream ois = null;//듣기
+		//들은걸 말하기
 		try {
 			server = new ServerSocket(port);
 			System.out.println("서버 소켓 생성되었습니다.");
@@ -19,9 +20,10 @@ public class NetworkServer2 {
 				System.out.println("client : " + client);
 				oos = new ObjectOutputStream(client.getOutputStream());
 				ois = new ObjectInputStream(client.getInputStream());
-				String msg = (String) ois.readObject();
+				//듣기 코드
+				String msg = (String) ois.readObject();//스피커(h/w)
 				System.out.println("msg : " + msg);
-				oos.writeObject(msg);
+				oos.writeObject(msg);//말하기 코드(마이크)- 소켓 -  oos
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
