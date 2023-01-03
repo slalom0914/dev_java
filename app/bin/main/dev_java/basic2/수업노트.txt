@@ -1,0 +1,11 @@
+List<DeptVO> & List<Map>
+1. 첫번째 제네릭 타입은 DeptVO이다
+private int deptno;
+private String dname;
+private String loc;
+:
+2. 두번째 제네릭 타입은 Map이다.- Object - 형전환 - ()Casting
+연산을 해야하니까... +, -, *, %, /
+CastingException만날 수 있다.
+:
+ORM솔루션 - MyBatis연계(반자동) -> Hibernate(DML문 자체 없음-완전자동)
