@@ -9,8 +9,13 @@ import javax.swing.*;
 // 코드를 작성하시오.
 public class GlobalVar3 {
     boolean isView = false;
-    void methodA(){
-        //jf.setVisible();
+    //파라미터 자리도 변수를 선언하는 자리이다.
+    //초기화가 안되어 있다.- 원본이어야 한다.
+    //나를 호출하기 전에 isiView를 true로 변경해 주는
+    //코드가 먼저 호출되어야 함. - 그렇지 않으면 isView에 false
+    //methodA를 호출하기 전에 반드시 methodB를 경유한다.
+    void methodA(JFrame jf){
+        jf.setVisible(isView);
     }
     //메서드는 호출해야 실행문이 실행 기회를 갖는다.
     //isView가 false이므로 true로 변경되기 위해서는 methodB를 경유해야 함
@@ -26,7 +31,8 @@ public class GlobalVar3 {
         GlobalVar3 gv3 = new GlobalVar3();
         //gv3.isView = true;
         gv3.methodB();//isView가 false였는데 true로 변경되었다.-원본
-        jf.setVisible(gv3.isView);
+        gv3.methodA(jf);
+        //jf.setVisible(gv3.isView);
 
     }
 }
