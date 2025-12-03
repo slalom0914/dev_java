@@ -1,5 +1,5 @@
 package aTalk.step1;
-
+// 스레드, 생성자, 인스턴스화, IO패키지, 변수, 자료구조(Map,List,Set)
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
