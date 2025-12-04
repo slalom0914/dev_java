@@ -13,7 +13,7 @@ public class JFrame01Logic {
         System.out.println("JFrame01Logic 생성자 호출 성공");
     }
     public MemberVO[] getList(){
-
+        System.out.println("getList 호출 성공");
         return null;
     }
 }
