@@ -23,7 +23,7 @@ public class MemberManagerV2 implements ActionListener {
     PreparedStatement   pstmt   = null;
     ResultSet           rs      = null;
     JFrame          jf              = new JFrame();
-    MemberVO[]      mvos            = new MemberVO[3];
+    MemberVO[]      mvos            = null;
     JPanel          jp_north        = new JPanel();
     String          cols[]          = {"아이디","이름","나이"};
     String          data[][]        = new String[0][3];
@@ -49,29 +49,59 @@ public class MemberManagerV2 implements ActionListener {
         jf.setSize(500,400);//가로세로 크기
         jf.setVisible(true);//화면 보여줌
     }
+
+    /************************************************************************
+     * 오라클 서버에 접속해서 회원정보 가져오기
+     * sql: SELECT mem_id, mem_name, mem_age FROM member
+     * @param null
+     * @return MemberVO[]
+     ************************************************************************/
     public MemberVO[] getMemberList(){
+        //String은 불변객체이고  또 읽기 전용 클래스 이어서 불편함
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT mem_id, mem_name, mem_age");
+        //from절 앞에 띄어쓰기 확인요망. 맨 뒤에 세미콜론제거되었는지
         sql.append(" FROM member");
+        //예외상황 발생할 수 있을 때 try..catch블록을 사용함.
         try {
+            //오라클 제조사가 제공하는 드라이버 클래스를 로딩하기.
             Class.forName(_DRIVER);//오라클제품이다
+            //연결객체 생성하기 -파라미터가 세 개 필요함.
             con = DriverManager.getConnection(_URL, _USER, _PW);
+            //개발자 작성한 select문 전달
             pstmt = con.prepareStatement(sql.toString());
+            //오라클 서버에게 처리 요청하고 응답을 받아오기
+            //select문 요청시에는 executeQuery사용함. 그리고 리턴타입은 ResultSet
             rs = pstmt.executeQuery();
-            MemberVO[] mvos = null;
+            //n개 행을 담기 위해서 객체 배열을 선언했음. 그런데 size정할 수 없음.
+            //MemberVO[] mvos = null;
+            //한 행에 3종류의 컬럼이 있으므로 한 행을 담는 클래스는 MemberVO 하였음.
+            //VO패턴에는 한 번에 오직 한 행만 담을 수 있다.
+            //여러행을 담고 싶다면 객체 배열을 선언함.
+            //아래 인스턴스화에서 선언만하고 생성은 반복문에서 해야함.
             MemberVO mvo = null;
             Vector<MemberVO> v = new Vector<>();
             while(rs.next()){
+                //반복문 안에서 왜 객체생성을 해야하나?
                 mvo = new MemberVO();
+                mvo.setMem_id(rs.getString("mem_id"));
+                mvo.setMem_name(rs.getString("mem_name"));
+                mvo.setMem_age(rs.getInt("mem_age"));
+                //count수를 알 수 없으므로 벡터 자료구조에 담기
+                //v.size()메서드를 통해서 count수를 알아낼 수 있다.
                 v.add(mvo);
             }
             System.out.println(v.size());//3출력-> add가 세번 반복됨
+            //반복문에서 add한 숫자만큼 배열의 크기가 됨
             mvos = new MemberVO[v.size()];
+            //위 객체배열은 현재 빈 깡통이다.
+            //벡터안에 담긴 MemberVO를 MemberVO[]에 복사해주는 메서드가
+            //copyInto메서드 이다.
             v.copyInto(mvos);
         } catch (Exception e) {
             System.out.println("Exception :" + e.getMessage());
         }
-        return mvos;
+        return mvos;//반환되는 mvos는 전역변수
     }
     public static void main(String[] args) {
         MemberManagerV2 mm = new MemberManagerV2();
