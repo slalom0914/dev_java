@@ -18,7 +18,7 @@ public class TimeClient extends Thread{
 
      */
     JLabel jlb_time = null;
-    public TimeClient(JLabel jlb_time){
+    public TimeClient(JLabel jlb_time) {
         System.out.println("TimeClient생성자 호출");
         this.jlb_time = jlb_time;
     }

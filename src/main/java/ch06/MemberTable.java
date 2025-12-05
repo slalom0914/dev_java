@@ -1,5 +1,7 @@
 package ch06;
 
+import ch06.timer.TimeClient;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -21,6 +23,7 @@ public class MemberTable {
     JButton btn_insert = new JButton("입력");
     JButton btn_update = new JButton("수정");
     JButton btn_delete = new JButton("삭제");
+    JLabel  jlb_time = new JLabel("현재시간출력",JLabel.RIGHT);
     //생성자
     public MemberTable(){
         initDisplay();
@@ -34,8 +37,12 @@ public class MemberTable {
         jp.add(btn_insert);
         jp.add(btn_update);
         jp.add(btn_delete);
+        TimeClient tc = new TimeClient(jlb_time);
+        tc.start();//run()직접호출하는게 아니라 start()하면 run()호출됨.
+        //jf.setTitle("회원관리");
         jf.add("North",jp);
         jf.add("Center",jsp);
+        jf.add("South",jlb_time);
         jf.setSize(400,400);
         jf.setVisible(true);
     }
