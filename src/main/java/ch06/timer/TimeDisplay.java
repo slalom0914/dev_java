@@ -17,6 +17,8 @@ public class TimeDisplay extends JFrame {
     }
     //화면그리기 구현
     public void initDisplay(){
+        TimeClient timeClient = new TimeClient(jlb_time);
+        timeClient.start();//TimeClient에 있는 run()호출됨.
         jlb_time.setFont(font);
         jf_time.add("Center",jlb_time);
         jf_time.setSize(400,200);
