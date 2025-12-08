@@ -6,6 +6,10 @@ package anet.step1;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+
 /*
 JTextField에 사용자가 메시지를 입력하고 엔터(전송-이벤트)하면 처리할 수  있는
 콜백메서드를 ActionListener가 선언하고 있다.
@@ -14,6 +18,11 @@ JTextField에 사용자가 메시지를 입력하고 엔터(전송-이벤트)하
 두 가지를 나누어서 처리하자(우선 순위가 있다.)
  */
 public class BananaClient extends JFrame implements ActionListener {
+    //아래 변수들은 BananaClientThread에서도 필요할 수 있으므로 전변으로 함
+    Socket socket = null;
+    ObjectOutputStream oos = null;
+    ObjectInputStream ois = null;
+    String nickName = null;
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -25,6 +34,12 @@ public class BananaClient extends JFrame implements ActionListener {
         //주의 : 절대로 화면그리기 보다 먼저 호출하지 않기
         try{
             //예외가 발생할 가능성이 있는 코드
+            //소켓 객체 인스턴스화 하기(서버에 accept당함)
+            socket = new Socket("127.0.0.1",5000);
+            oos = new ObjectOutputStream(socket.getOutputStream());
+            ois = new ObjectInputStream(socket.getInputStream());
+            //서버에게 내가 입장한 사실을 알림
+            oos.writeObject(100+"#"+nickName);
         }catch (Exception e){
 
         }
@@ -37,6 +52,7 @@ public class BananaClient extends JFrame implements ActionListener {
     }
     //화면그리기 구현
     public void initDisplay(){
+        nickName = JOptionPane.showInputDialog(this, "닉네임을 입력하시오.");
 
     }//end of initDisplay
 }
