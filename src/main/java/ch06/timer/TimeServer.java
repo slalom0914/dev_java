@@ -20,6 +20,7 @@ public class TimeServer extends Thread{
     public void run() {
         try {
             //서버소켓에 접속한 클라이언트 소켓을 사용하여 쓰기클래스 생성함.
+            //소켓을 활용해서 생성한 출력 스트림
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             //현재 클래스에서는 굳이 필요없음. -왜냐면 메신저를 만드는게 아니므로 필요없음.
             BufferedReader in = new BufferedReader(new InputStreamReader(
