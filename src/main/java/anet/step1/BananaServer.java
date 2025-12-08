@@ -6,6 +6,7 @@ package anet.step1;
 import javax.swing.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BananaServer extends JFrame implements Runnable{
@@ -17,7 +18,10 @@ public class BananaServer extends JFrame implements Runnable{
     List<BananaServerThread> globalList = null;
     @Override
     public void run() {
-
+        //globalList = new ArrayList<>();
+        //메모리는 할당되었지만 현재 아무것도 없는 상태이다.
+        globalList = new ArrayList<BananaServerThread>();
+        System.out.println(globalList.size());//0
     }//end of run
 
     public static void main(String[] args) {
