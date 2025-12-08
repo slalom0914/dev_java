@@ -4,6 +4,7 @@ package anet.step1;
 그래서 인터페이스인 Runnable implements한 다음 run재정의 한다.
  */
 import javax.swing.*;
+import java.awt.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -16,6 +17,10 @@ public class BananaServer extends JFrame implements Runnable{
     Socket client = null;
     //서버에 접속해온 여러 사용자 스레드 담을 객체 선언
     List<BananaServerThread> globalList = null;
+    JTextArea jta_log = new JTextArea(10,30);
+    JScrollPane jsp_log = new JScrollPane(jta_log,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
+            , JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    Font f = new Font("돋움체", Font.BOLD,20);
     @Override
     public void run() {
         //globalList = new ArrayList<>();
@@ -31,7 +36,8 @@ public class BananaServer extends JFrame implements Runnable{
                 //여기에서 waiting상태가 됨
                 client = server.accept();
                 //누눈가 입장했다면 클라이언트 정보를 읽기
-                System.out.println(client.getInetAddress());
+                System.out.println(client);
+//                System.out.println(client.getInetAddress());
                 //클라이언트에 대한 소켓 정보를 얻어내면 BananaServerThread에게
                 //제어권을 넘겨서 채팅기능을 구현해 본다
                 BananaServerThread bst = new BananaServerThread(this);
@@ -52,6 +58,14 @@ public class BananaServer extends JFrame implements Runnable{
     }//end of main
     //서버에 로그를 출력하기 위해 화면 그리기
     public void initDisplay() {
-
+        jta_log.setBackground(Color.orange);
+        jta_log.setFont(f);
+        //여기서 this는 BananaServer를 말함
+        //그런데 왜 JFrame이 제공하는 setTitle()호출할 수 있는 건가요?
+        //JFrame을 상속받았기 때문에 부모가 제공하는 메서드 호출 가능함.
+        this.setTitle("채팅서버 로그");
+        this.add("Center",jsp_log);
+        this.setSize(800, 400);
+        this.setVisible(true);
     }//end of initDisplay
 }//end of BananaServer
