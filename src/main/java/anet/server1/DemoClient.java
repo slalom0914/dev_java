@@ -19,7 +19,7 @@ public class DemoClient extends JFrame implements ActionListener {
 
     public void init(){
         try {
-            socket  = new Socket("127.0.0.1",5000);
+            socket  = new Socket("127.0.0.1",3000);
             oos     = new ObjectOutputStream(socket.getOutputStream());//말하기
             ois     = new ObjectInputStream(socket.getInputStream());//청취
             //내가 서버에 접속한 사실을 알림

@@ -41,11 +41,14 @@ public class DemoServer extends JFrame implements Runnable, ActionListener {
         try{
             //서버소켓 생성하기
             server = new ServerSocket(g_port);
-            System.out.println("ServerSocket Ready...");
+            jta_log.append("ServerSocket Ready...\n");
             while(!isStop){
                 client = server.accept();
                 System.out.println(client);
+                jta_log.append("접속해온 사람 => "+client+"\n");
                 DemoServerThread bst = new DemoServerThread(this);
+                globalList.add(bst);
+                jta_log.append("현재인원수 : "+globalList.size()+"\n");
                 bst.start();//대신 run()호출 해줌
             }//end of while문 - 무한루프로 처리한 이유는 서버는 24시간 무중단 되어야 함.
         }catch(Exception e){
@@ -69,8 +72,8 @@ public class DemoServer extends JFrame implements Runnable, ActionListener {
     public static void main(String[] args) {
         DemoServer ds = new DemoServer();
         ds.initDisplay();//화면이 출력됨
-        Thread t = new Thread(ds);//main스레드와 이벤트 스레드 충돌이나 중단점
-        t.start();//run()호출됨-지연이 발생할 가능성이 있는 코드를 따로 관리함.
+        //Thread t = new Thread(ds);//main스레드와 이벤트 스레드 충돌이나 중단점
+        //t.start();//run()호출됨-지연이 발생할 가능성이 있는 코드를 따로 관리함.
     }
     //화면 그리기
     public void initDisplay(){
@@ -111,7 +114,18 @@ public class DemoServer extends JFrame implements Runnable, ActionListener {
             try{
                 //이미 서버가 기동 중이면 다시 시작되지 않도록 처리
                 //insert here
-                
+                if(server!=null && !server.isClosed()){
+                    jta_log.append("이미 서버가 기동 중입니다.\n");
+                    //서버가 이미 기동중이면 같은 port번호로는 개설이 안됨
+                    //다음 코드는 실행할 필요가 없다.
+                    return;
+                }//end of if
+                //사용자가 JTextField에 입력한 포트번호는 문자열 이므로 숫자로형전환
+                g_port = Integer.parseInt(jtf_port.getText());
+                //새로운 서버 시작이므로 초기화 해줌 - false
+                isStop = false;
+                Thread th = new Thread(this);
+                th.start();
             }catch(NumberFormatException nfe){
                 jta_log.append("포트번호를 숫자로 입력하세요.\n");
             }
