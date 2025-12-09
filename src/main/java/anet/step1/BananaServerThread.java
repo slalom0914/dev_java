@@ -89,8 +89,9 @@ public class BananaServerThread extends Thread{
                     }break run_start;//현재 스레드는 종료됨과 동시에 반복문 탈출하기
                 }//end of switch
             }//end of while
+            System.out.println("while 탈출하기");
         }catch(Exception ex) {
-
+            System.out.println(ex.getMessage());
         }//end of try..catch
     }//end of run
 }

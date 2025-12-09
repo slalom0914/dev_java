@@ -63,6 +63,14 @@ public class BananaClient extends JFrame implements ActionListener {
                 System.out.println(ex.getMessage());
             }
         }//end of 엔터쳤을 때와 전송버튼 클릭했을 때
+        else if(obj == jbtn_exit){
+            try{
+                oos.writeObject(500+"#"+nickName);
+                System.exit(0);//JVM와 연결을 끊음- 스레드 회수, 어플리케이션 종료
+            }catch(Exception ex){
+                System.out.println(ex.getMessage());
+            }
+        }//end of 나가기
     }//end of actionPerformed
 
     //통신을 위해 필요한 코드 작성하기 - 지연이 발생할 수 있음.
@@ -86,6 +94,7 @@ public class BananaClient extends JFrame implements ActionListener {
         }
     }//end of init
     public static void main(String[] args) {
+        JFrame.setDefaultLookAndFeelDecorated(true);
         BananaClient bc = new BananaClient();
         //메서드 호출 순서를 반드시 지킬 것. 왜냐하면 init()먼저 하면 지연이 발생함.
         bc.initDisplay();
@@ -101,6 +110,19 @@ public class BananaClient extends JFrame implements ActionListener {
         jtf_msg.addActionListener(this);
         jbtn_send.addActionListener(this);
         jbtn_exit.addActionListener(this);
+        jbtn_one.setBackground(new Color(158,9,9));
+        jbtn_one.setForeground(new Color(212,212,212));
+        jbtn_change.setBackground(new Color(7,84,170));
+        jbtn_change.setForeground(new Color(212,212,212));
+        jbtn_color.setBackground(new Color(19, 99, 57));
+        jbtn_color.setForeground(new Color(212, 212, 212));
+        jbtn_emoticon.setBackground(new Color(121, 85, 72));   // 모던 초콜릿 브라운
+        jbtn_emoticon.setForeground(new Color(255, 248, 240)); // 크림 화이트
+        jbtn_logout.setBackground(new Color(255, 255, 200));
+        jbtn_logout.setForeground(new Color(57, 57, 57));
+        jbtn_exit.setBackground(new Color(54, 54, 54));
+        jbtn_exit.setForeground(new Color(212, 212, 212));
+
         //사용자로 부터 닉네임 입력 받기
         //nickName = JOptionPane.showInputDialog("닉네임을 입력하세요.");
         this.setLayout(new GridLayout(1,2,2,2));

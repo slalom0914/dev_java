@@ -30,13 +30,13 @@ public class BananaServer extends JFrame implements Runnable{
         try{
             //서버소켓 생성하기
             server = new ServerSocket(5000);
-            System.out.println("ServerSocket Ready...");
+            jta_log.append("ServerSocket Ready...\n");
             while(true){
                 //서버소켓에 접속해온 클라이언트 소켓에 대한 정보 받아내기
                 //여기에서 waiting상태가 됨
                 client = server.accept();
                 //누눈가 입장했다면 클라이언트 정보를 읽기
-                System.out.println(client);
+                jta_log.append(client+"\n");
 //                System.out.println(client.getInetAddress());
                 //클라이언트에 대한 소켓 정보를 얻어내면 BananaServerThread에게
                 //제어권을 넘겨서 채팅기능을 구현해 본다
@@ -49,6 +49,7 @@ public class BananaServer extends JFrame implements Runnable{
     }//end of run
 
     public static void main(String[] args) {
+        JFrame.setDefaultLookAndFeelDecorated(true);
         BananaServer bs = new BananaServer();
         bs.initDisplay();
         //main스레드가 아닌 다른 하나의 스레드가 더 있다.
