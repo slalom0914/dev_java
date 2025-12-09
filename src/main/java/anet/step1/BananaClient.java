@@ -78,8 +78,11 @@ public class BananaClient extends JFrame implements ActionListener {
             ois = new ObjectInputStream(socket.getInputStream());
             //서버에게 내가 입장한 사실을 알림
             oos.writeObject(100+"#"+nickName);
+            ///서버에서 한 말을 듣기 위한 준비
+            BananaClientThread bct = new BananaClientThread(this);
+            bct.start();
         }catch (Exception e){
-
+            System.out.println(e.getMessage());
         }
     }//end of init
     public static void main(String[] args) {

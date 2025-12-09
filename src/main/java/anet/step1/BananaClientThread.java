@@ -1,6 +1,7 @@
 package anet.step1;
 
 import java.util.StringTokenizer;
+import java.util.Vector;
 
 //서버로 부터 순서대로 메시지를 들어야 한다.
 //지속적으로 듣는다.
@@ -31,6 +32,9 @@ public class BananaClientThread extends Thread {
                     case 100:{
                         String nickName = st.nextToken();
                         bc.jta_display.append(nickName+"님이 입장하였습니다.\n");
+                        Vector<String> v = new Vector<String>();
+                        v.add(nickName);
+                        bc.dtm.addRow(v);
                     }break;
                 }
             }catch(Exception e){

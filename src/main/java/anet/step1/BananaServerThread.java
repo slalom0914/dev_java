@@ -34,8 +34,10 @@ public class BananaServerThread extends Thread{
             nickName = st.nextToken();//키위 담김
             //스레드에 담긴 사람들: 내가 입장하기 전에 입장한 사람들의 메시지 처리
             for(BananaServerThread bst:bs.globalList){
+                System.out.println("내가 입장하기 전에 입장해 있는 사람들");
                 this.send(100+"#"+bst.nickName);
             }
+            bs.globalList.add(this);
             //내가 입장한 후에 사람들 메시지 처리
             broadCasting(msg);
         }catch(Exception ex) {
@@ -44,11 +46,12 @@ public class BananaServerThread extends Thread{
     }
     //현재 입장해 있는 친구들 모두에게 메시지 전송하기
     public void broadCasting(String msg){
+        System.out.println("broadCasting: "+msg);
         for(BananaServerThread bst:bs.globalList){
             //System.out.println(bst.nickName);
             bst.send(msg);
-        }
-    }
+        }//end of for
+    }//end of broadingCasting
     //클라이언트가 보낸 메시지를 듣고 말하기 구현
     public void send(String msg){
         try {
