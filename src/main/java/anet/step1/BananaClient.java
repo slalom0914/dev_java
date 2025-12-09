@@ -53,8 +53,17 @@ public class BananaClient extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-    }
+        Object obj = e.getSource();
+        //전송 버튼을 눌렀을 때 와 메시지 입력 후 엔터 쳤을 때
+        if(obj == jtf_msg || obj == jbtn_send){
+            try {
+                oos.writeObject(200+"#"+nickName+"#"+jtf_msg.getText());
+                jtf_msg.setText("");
+            }catch(Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        }//end of 엔터쳤을 때와 전송버튼 클릭했을 때
+    }//end of actionPerformed
 
     //통신을 위해 필요한 코드 작성하기 - 지연이 발생할 수 있음.
     //화면 다음에 순서(차례-Thread)를 가져야 한다.
