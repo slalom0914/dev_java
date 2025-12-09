@@ -11,6 +11,9 @@ public class AppleServer extends JFrame implements Runnable {
 
     }
     public static void main(String[] args) {
-
+        JFrame.setDefaultLookAndFeelDecorated(true);
+    }
+    public void initDisplay(){
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 }
