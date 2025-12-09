@@ -36,6 +36,25 @@ public class BananaClientThread extends Thread {
                         v.add(nickName);
                         bc.dtm.addRow(v);
                     }break;
+                    case 200:{//200#키위#오늘 스터디할까?
+                        String nickName = st.nextToken();
+                        String message = st.nextToken();
+                        bc.jta_display.append("[ "+nickName+" ] "+message+"\n");
+                        bc.jta_display.setCaretPosition(bc.jta_display.getDocument().getLength());
+                    }break;
+                    //case문 마다 {}로 스코프 준 이유는 우리가 같은 프로토콜정보를 사용하므로
+                    //동일한 이름의 변수 사용이 불가피하다.- 그래서 사용함.
+                    case 500:{
+                        String nickName = st.nextToken();
+                        bc.jta_display.append(nickName+"님이 퇴장하였습니다.\n");
+                        bc.jta_display.setCaretPosition(bc.jta_display.getDocument().getLength());
+                        for(int i=0;i<bc.dtm.getRowCount();i++){
+                            String n = bc.dtm.getValueAt(i,0).toString();
+                            if(n.equals(nickName)){
+                                bc.dtm.removeRow(i);
+                            }//end of if - 데이터셋에 있는 대화명을 삭제하기
+                        }//end of for - 여러명 중에서 찾기
+                    }break;
                 }
             }catch(Exception e){
 
