@@ -54,10 +54,15 @@ public class BananaClient extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();
+        String msg = jtf_msg.getText();
         //전송 버튼을 눌렀을 때 와 메시지 입력 후 엔터 쳤을 때
         if(obj == jtf_msg || obj == jbtn_send){
+            if(msg == null || msg.length() == 0){
+               JOptionPane.showMessageDialog(this,"메시지를 입력하세요");
+               return;//actionPerformed탈출함.
+            }
             try {
-                oos.writeObject(200+"#"+nickName+"#"+jtf_msg.getText());
+                oos.writeObject(200+"#"+nickName+"#"+msg);
                 jtf_msg.setText("");
             }catch(Exception ex) {
                 System.out.println(ex.getMessage());
@@ -129,7 +134,7 @@ public class BananaClient extends JFrame implements ActionListener {
         //JFrame에 들어갈 첫번째 속지는 동서남북 중앙으로 배치할 수 있어야 해요.
         jp_first.setBackground(Color.orange);
         jp_first.setLayout(new BorderLayout());
-        jp_first.add("Center",jta_display);
+        jp_first.add("Center",jsp_display);
         jp_first.add("South",jp_first_south);
         jp_first_south.setLayout(new BorderLayout());
         jp_first_south.add("Center",jtf_msg);

@@ -41,7 +41,7 @@ public class BananaServerThread extends Thread{
             //내가 입장한 후에 사람들 메시지 처리
             broadCasting(msg);
         }catch(Exception ex) {
-
+            System.out.println(ex.getMessage());
         }
     }
     //현재 입장해 있는 친구들 모두에게 메시지 전송하기
@@ -57,7 +57,7 @@ public class BananaServerThread extends Thread{
         try {
             oos.writeObject(msg);//100#키위
         }catch(Exception ex) {
-
+            System.out.println(ex.getMessage());
         }
     }//end of send
     @Override
