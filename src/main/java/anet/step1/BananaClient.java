@@ -57,6 +57,7 @@ public class BananaClient extends JFrame implements ActionListener {
     }
 
     //통신을 위해 필요한 코드 작성하기 - 지연이 발생할 수 있음.
+    //화면 다음에 순서(차례-Thread)를 가져야 한다.
     public void init(){
         //지연이 발생할 가능성이 있는 코드들이 있다.
         //주의 : 절대로 화면그리기 보다 먼저 호출하지 않기
