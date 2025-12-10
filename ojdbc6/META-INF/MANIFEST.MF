@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Implementation-Vendor: Oracle Corporation
+Implementation-Title: ojdbc6.jar
+Implementation-Version: Oracle JDBC Driver version - "11.1.0.7.0-Produ
+ ction"
+Implementation-Time: Wed Sep 17 16:40:39 2008
+Specification-Vendor: Oracle Corporation
+Sealed: true
+Created-By: 1.6.0 (Sun Microsystems Inc.)
+Specification-Title: Oracle JDBC driver classes for use with JDK6
+Specification-Version: Oracle JDBC Driver version - "11.1.0.7.0-Produc
+ tion"
+Main-Class: oracle.jdbc.OracleDriver
+
+Name: oracle/sql/converter_xcharset/
+Sealed: false
+
+Name: oracle/sql/
+Sealed: false
+
+Name: oracle/sql/converter/
+Sealed: false
+
