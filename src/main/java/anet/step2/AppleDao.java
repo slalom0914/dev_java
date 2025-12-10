@@ -25,8 +25,8 @@ public class AppleDao {
     //우편번호와 주소 가져오기
     public ZipCodeVO[] getAddress(String zdo, String dong){
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT zipcode, addres");
-        sql.append(" FROM zipcode");
+        sql.append("SELECT zipcode, address");
+        sql.append(" FROM zipcode_t");
         sql.append(" WHERE 1=1");
         if(zdo !=null && zdo.length() > 0){
             sql.append(" AND zdo = ?");
@@ -62,12 +62,14 @@ public class AppleDao {
             //기존에 조회된 결과는 삭제하고 새로 출력한다.
             //만일 참이면 조회결과가 있다.이고 만일 거짓이면 조회결과가 없음
             if (v.size() > 0) {
+                //조회 결과가 남아 있어요
                 while (azc.dtm_zipcode.getRowCount() > 0) {
                     azc.dtm_zipcode.removeRow(0);
                 }
             }//end of if
             //조회된 결과를 DefaultTableModel에 매칭하기
             for (int x = 0; x < zvos.length; x++) {
+                //벡터 생성하기
                 Vector<Object> oneRow = new Vector<>();
                 oneRow.add(0, zvos[x].getZipcode());
                 oneRow.add(1, zvos[x].getAddress());

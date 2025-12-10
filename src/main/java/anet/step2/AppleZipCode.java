@@ -49,9 +49,9 @@ public class AppleZipCode extends JFrame implements ActionListener
     public void refreshData(String zdo, String dong){
         logger("zdo:"+zdo+", dong:"+dong);
         try{
-            //
+            appleDao.getAddress(zdo,dong);
         }catch(Exception ex){
-
+            logger(ex.getMessage());
         }
     }//end of refreshData
     @Override
