@@ -40,16 +40,28 @@ public class AppleZipCode extends JFrame implements ActionListener
             ,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
             ,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     String zdos3[] = null;//new String[]{"서울","경기","인천"};
-    AppleDao appleDao = new AppleDao();
+    AppleDao appleDao = new AppleDao(this);
     public AppleZipCode() {
         zdos3 = appleDao.getZdoList();
         logger(zdos3.length);//17출력
     }
+    //zdo는 콤보박스에서 item을 클릭했을 때(즉 상태값이 변경되었을 때)
+    public void refreshData(String zdo, String dong){
+        logger("zdo:"+zdo+", dong:"+dong);
+        try{
+            //
+        }catch(Exception ex){
 
-
+        }
+    }//end of refreshData
     @Override
     public void actionPerformed(ActionEvent e) {
-    }
+        Object obj = e.getSource();
+        if(obj == jbtn_search || obj == jtf_search) {
+            String dong = jtf_search.getText();
+            refreshData(zdo, dong);
+        }
+    }//end of actionPerformed
     //동이름을 입력하는 컴포넌트에 클릭을 하면-> 포커스를 얻으면
     @Override
     public void focusGained(FocusEvent e) {
@@ -62,6 +74,12 @@ public class AppleZipCode extends JFrame implements ActionListener
     }
     @Override
     public void itemStateChanged(ItemEvent e) {
+        Object obj = e.getSource();
+        if(obj == jcb_zdo2) {
+            if(e.getStateChange() == ItemEvent.SELECTED) {
+                zdo = zdos3[jcb_zdo2.getSelectedIndex()];//서울,경기, 부산,,,,
+            }
+        }
     }
     @Override
     public void mouseClicked(MouseEvent e) {
