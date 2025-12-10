@@ -22,11 +22,16 @@ public class AppleDao {
     public AppleDao(AppleZipCode azc) {
         this.azc = azc;
     }
-    //우편번호와 주소 가져오기
+    /*************************************************************
+     * 제목 : 편번호와 주소 가져오기
+     * @param zdo //사용자가 선택한 시도 정보
+     * @param dong //사용자가 입력한 동이름
+     * @return ZipCodeVO[]
+     ************************************************************/
     public ZipCodeVO[] getAddress(String zdo, String dong){
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT zipcode, address");
-        sql.append(" FROM zipcode_t");
+        sql.append("SELECT zipcode, address");//부적합한 식별자- Toad
+        sql.append(" FROM zipcode_t");//테이블 또는 뷰가 존재하지 않습니다. -Toad
         sql.append(" WHERE 1=1");
         if(zdo !=null && zdo.length() > 0){
             sql.append(" AND zdo = ?");
@@ -35,8 +40,14 @@ public class AppleDao {
             sql.append(" AND dong LIKE '%'||?||'%'");
         }
         int i = 1;
+        //꼭 배열이어야 하나요?
+        //왜 객체 배열을 리턴타입으로 했나요?
         ZipCodeVO[] zvos = null;
         try {
+            //반복되는 코드를 피하기 위해서 DBConnectionMgr추가함.
+            //그랬더니 비번과 계정이름, 드라이버 클래스, URL 등을 보지 않아도 됨
+            //한 달에 한 번씩 계정에 대한 비번을 변경하더라도 한 곳만 고치면
+            //모든 소스에 적용된다.
             con = dbMgr.getConnection();
             pstmt = con.prepareStatement(sql.toString());
             //위에서 작성한 select문의 ?갯수를 파악하여 매핑되는 값 지정함.
@@ -46,7 +57,14 @@ public class AppleDao {
             if (dong != null && dong.length() > 0) {
                 pstmt.setString(i++, dong);//JTextField에 입력 후 엔터쳤을 때 혹은 찾기버튼 눌렀을 때
             }
+            //조회나 상세조회 일때는 executeQuery를 사용한다.
+            //executeQuery는 리턴타입이 ResultSet이고,
+            //입력,수정,삭제 일때는 executeUpdate를 사용한다.
+            //executeUpdate는 리턴타입이 int이다.
             rs = pstmt.executeQuery();
+            //조회 결과를 내가 예측할 수  없어서 Vector클래스를 사용하기로 했다.
+            //조회 결과 n건을 담으려고 ZipCodeVO[]선언함.
+            //String[] names = new String[3];
             Vector<ZipCodeVO> v = new Vector<>();
 
             ZipCodeVO zvo = null;
@@ -55,6 +73,7 @@ public class AppleDao {
                         , rs.getString("address"));
                 v.add(zvo);
             }//end of while
+            logger(v);
             zvos = new ZipCodeVO[v.size()];
             //벡터에 저장된 정보를 객체 배열에 복사하기
             v.copyInto(zvos);
