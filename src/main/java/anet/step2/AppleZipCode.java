@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Vector;
+//인스턴스화가 막혀있는 경우 - 왜냐면 추상클래스로 구현하였다.
+import static util.CustomLogger.logger;
 
 public class AppleZipCode extends JFrame implements ActionListener
         , ItemListener, FocusListener, MouseListener {
@@ -37,16 +39,23 @@ public class AppleZipCode extends JFrame implements ActionListener
     JScrollPane jsp_zipcode = new JScrollPane(jtb_zipcode
             ,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
             ,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    String zdos3[] = new String[]{"서울","경기","인천"};
-
-
+    String zdos3[] = null;//new String[]{"서울","경기","인천"};
+    AppleDao appleDao = new AppleDao();
+    public AppleZipCode() {
+        zdos3 = appleDao.getZdoList();
+        logger(zdos3.length);//17출력
+    }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
     }
+    //동이름을 입력하는 컴포넌트에 클릭을 하면-> 포커스를 얻으면
     @Override
     public void focusGained(FocusEvent e) {
+        if(e.getSource() == jtf_search){
+            jtf_search.setText("");
+        }
     }
     @Override
     public void focusLost(FocusEvent e) {
