@@ -18,6 +18,44 @@ public class AppleDaoV2 {
     PreparedStatement pstmt = null;
     ResultSet rs = null;
     public AppleDaoV2() {}
+
+    /*************************************************************
+     * 제목 : 회원가입 구현하기
+     * INSERT INTO member(mem_id, mem_pw, mem_nickname, mem_name
+     *                  , gender, zipcode, address)
+     * VALUES(:id, :pw, :nick, :name, :gender, :zipcode, :address);
+     * @param mVO
+     * @return result : 1이면 등록 성공, 0이면 등록 실패
+     *************************************************************/
+    public int memberInsert(MemberVO mVO){
+        int result = -1;//1이면 회원가입 성공, 0이면 회원가입 실패
+        StringBuilder sql = new StringBuilder();
+        int i = 1;
+        try {
+            sql.append("INSERT INTO member(mem_id, mem_pw, mem_nickname, mem_name ");
+            sql.append("                 , gender, zipcode, address)              ");
+            sql.append("VALUES(?, ?, ?, ?, ?, ?, ?)");
+            con = dbMgr.getConnection();
+            pstmt = con.prepareStatement(sql.toString());//?갯수 파악됨       \
+            //i는 후위 연산자 이므로 1부터 1씩 증가 하면서 채워짐
+            pstmt.setString(i++, mVO.getMem_id());//1
+            pstmt.setString(i++, mVO.getMem_pw());//2
+            pstmt.setString(i++, mVO.getMem_nickname());//3
+            pstmt.setString(i++, mVO.getMem_name());//4
+            pstmt.setString(i++,mVO.getGender());//5
+            pstmt.setString(i++,mVO.getZipcode());//6
+            pstmt.setString(i++,mVO.getAddress());//7
+            result = pstmt.executeUpdate();//1이면 성공, 0이면 실패
+            System.out.println("result : "+result);
+        }catch(SQLException se){
+            System.out.println("[SQLException]: "+sql);
+        }catch(Exception e){
+            System.out.println("[Exception]: "+e.getMessage());
+        }finally {
+            dbMgr.freeConnection(con, pstmt);
+        }
+        return result;
+    }
     /*************************************************************
      * 제목 : 편번호와 주소 가져오기
      * @param zdo //사용자가 선택한 시도 정보
@@ -124,6 +162,17 @@ public class AppleDaoV2 {
 
     public static void main(String[] args) {
         AppleDaoV2 appleDao = new AppleDaoV2();
-        appleDao.getZdoList();
+        //appleDao.getZdoList();
+        MemberVO mVO = new MemberVO();
+        mVO.setMem_id("nice");
+        mVO.setMem_pw("123");
+        mVO.setMem_nickname("나신입");
+        mVO.setMem_name("강감찬");
+        mVO.setGender("남자");
+        mVO.setZipcode("12356");
+        mVO.setAddress("서울시 영등포구 당산동");
+        int result = appleDao.memberInsert(mVO);
+        if(result == 1) System.out.println("입력 성공");
+        else if(result == 0) System.out.println("등록 실패");
     }
 }
