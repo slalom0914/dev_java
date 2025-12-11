@@ -48,7 +48,7 @@ public class AppleZipCodeV2 extends JFrame implements ActionListener
         //회원가입 페이지에서 우편번호 검색창을 열때 오라클 서버를 경유 해야 함.
         //왜냐하면 44번 라인에서 zdos[]에 대한 초기화가 일어남
         //이 부분을 생략하면 NullPointerException 같은 예외 발생함.
-        this();
+        this();//디폴트 생성자 호출
         this.ams = ams;
     }
     //zdo는 콤보박스에서 item을 클릭했을 때(즉 상태값이 변경되었을 때)
