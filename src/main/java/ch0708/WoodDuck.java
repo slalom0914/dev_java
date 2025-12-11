@@ -2,6 +2,7 @@ package ch0708;
 //모든 클래스가 반드시 main메서드를 가질 필요는 없다.
 public class WoodDuck extends Duck{
     public WoodDuck(){
+        quackBehavior = new MuteQuack();
         flyBehavior = new FlyNoWay();
     }
     @Override

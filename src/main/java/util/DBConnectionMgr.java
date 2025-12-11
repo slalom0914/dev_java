@@ -15,14 +15,19 @@ public class DBConnectionMgr {
     private DBConnectionMgr() {
 
     }
+    //static이 있는 메서드나 변수는 프로세스에서 하나로 공유됨
+    //인스턴스화를 여러 번 하더라도(즉 복제본이 생겨도) 하나이다.
     //싱글턴 패턴 적용하는 코드
     public static DBConnectionMgr getInstance(){
+        //dbMgr변수가 참조하는 객체가 없을 때만 생성해줘
         if(dbMgr==null){
             dbMgr = new DBConnectionMgr();
         }
         return dbMgr;
     }
     //연결 객체 생성
+    //리턴타입이나 파라미터 자리에 원시형 타입 보다는
+    //객체 타입으로 연습하기
     public Connection getConnection() {
         try{
             Class.forName(_DRIVER);
@@ -33,7 +38,7 @@ public class DBConnectionMgr {
             System.out.println("연결 실패!!!"+ex.getMessage());
         }
         return conn;
-    }
+    }//end of getConnection
     //DB연동에 사용된 자원은 반드시 명시적으로 반납할 것.-GC(가비지 컬렉터-데몬스레드)
     public void freeConnection(Connection conn, PreparedStatement pstmt){
         if(pstmt!=null){
