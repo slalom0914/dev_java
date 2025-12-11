@@ -20,6 +20,37 @@ public class AppleDaoV2 {
     public AppleDaoV2() {}
 
     /*************************************************************
+     * 제목 : 로그인 구현하기
+     * @param userId 사용자가 입력한 아이디
+     * @param userPw 사용자가 입력한 비번
+     * @return 로그인 성공 후 조회된 닉네임
+     *************************************************************/
+    public String login(String userId, String userPw){
+        String nickName = null;
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT mem_nickname  ");
+        sql.append(" FROM member          ");
+        sql.append(" WHERE mem_id =?");
+        sql.append(" AND mem_pw =?");
+        try {
+            con = dbMgr.getConnection();
+            pstmt = con.prepareStatement(sql.toString());
+            pstmt.setString(1, userId);
+            pstmt.setString(2, userPw);
+            rs = pstmt.executeQuery();
+            if(rs.next()){
+                nickName = rs.getString("mem_nickname");
+            }
+            System.out.println("nickName : "+nickName);
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }finally {
+            dbMgr.freeConnection(con,pstmt,rs);
+        }
+        //return "대화명";
+        return nickName;
+    }
+    /*************************************************************
      * 제목 : 회원가입 구현하기
      * INSERT INTO member(mem_id, mem_pw, mem_nickname, mem_name
      *                  , gender, zipcode, address)
@@ -163,16 +194,17 @@ public class AppleDaoV2 {
     public static void main(String[] args) {
         AppleDaoV2 appleDao = new AppleDaoV2();
         //appleDao.getZdoList();
-        MemberVO mVO = new MemberVO();
-        mVO.setMem_id("nice");
-        mVO.setMem_pw("123");
-        mVO.setMem_nickname("나신입");
-        mVO.setMem_name("강감찬");
-        mVO.setGender("남자");
-        mVO.setZipcode("12356");
-        mVO.setAddress("서울시 영등포구 당산동");
-        int result = appleDao.memberInsert(mVO);
-        if(result == 1) System.out.println("입력 성공");
-        else if(result == 0) System.out.println("등록 실패");
+//        MemberVO mVO = new MemberVO();
+//        mVO.setMem_id("nice");
+//        mVO.setMem_pw("123");
+//        mVO.setMem_nickname("나신입");
+//        mVO.setMem_name("강감찬");
+//        mVO.setGender("남자");
+//        mVO.setZipcode("12356");
+//        mVO.setAddress("서울시 영등포구 당산동");
+//        int result = appleDao.memberInsert(mVO);
+//        if(result == 1) System.out.println("입력 성공");
+//        else if(result == 0) System.out.println("등록 실패");
+        appleDao.login("apple","123");
     }
 }
