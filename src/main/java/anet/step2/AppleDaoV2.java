@@ -59,6 +59,14 @@ public class AppleDaoV2 {
      * @return result : 1이면 등록 성공, 0이면 등록 실패
      *************************************************************/
     public int memberInsert(MemberVO mVO){
+        System.out.println("memberInsert");
+        System.out.println(mVO.getMem_id());
+        System.out.println(mVO.getMem_pw());
+        System.out.println(mVO.getMem_nickname());
+        System.out.println(mVO.getMem_name());
+        System.out.println(mVO.getGender());
+        System.out.println(mVO.getZipcode());
+        System.out.println(mVO.getAddress());
         int result = -1;//1이면 회원가입 성공, 0이면 회원가입 실패
         StringBuilder sql = new StringBuilder();
         int i = 1;
@@ -80,6 +88,7 @@ public class AppleDaoV2 {
             System.out.println("result : "+result);
         }catch(SQLException se){
             System.out.println("[SQLException]: "+sql);
+            logger(se.getMessage());
         }catch(Exception e){
             System.out.println("[Exception]: "+e.getMessage());
         }finally {

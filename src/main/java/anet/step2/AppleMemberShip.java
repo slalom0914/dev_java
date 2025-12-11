@@ -29,6 +29,7 @@ public class AppleMemberShip extends JDialog implements ActionListener {
     JButton jbtn_ins = new JButton("등록");
     JButton jbtn_close = new JButton("닫기");
     AppleZipCodeV2 azc = new AppleZipCodeV2(this);
+    AppleDaoV2 aDao = new AppleDaoV2();
     public AppleMemberShip() {
         initDisplay();
     }
@@ -38,6 +39,25 @@ public class AppleMemberShip extends JDialog implements ActionListener {
         if(obj == jbtn_zipcode){
             //우편번호 검색창 열기
             azc.initDisplay();
+        }else if(obj == jbtn_ins){
+            int result = -1;
+            String id = getId();
+            String pw = getPw();
+            String nickName = getNickName();
+            String name = getName();
+            String address = getAddress();
+            String zipcode = getZipcode();
+            String gender = getGender();
+            MemberVO mvo = new MemberVO();
+            mvo.setMem_id(id);
+            mvo.setMem_pw(pw);
+            mvo.setMem_name(name);
+            mvo.setMem_nickname(nickName);
+            mvo.setGender(gender);
+            mvo.setAddress(address);
+            mvo.setZipcode(zipcode);
+            result = aDao.memberInsert(mvo);
+            System.out.println("memberInsert :"+result);
         }
     }//end of actionPerformed
     public static void main(String[] args) {
