@@ -40,6 +40,9 @@ public class DBConnectionMgr {
         return conn;
     }//end of getConnection
     //DB연동에 사용된 자원은 반드시 명시적으로 반납할 것.-GC(가비지 컬렉터-데몬스레드)
+    //DB 연동에 사용된 인터페이스 들은 모두 연결되어 있어서
+    //반납시에는 생성한 역순으로 반납처리할 것.
+    //두 가지를 반납하는 경우는 insert, update, delete
     public void freeConnection(Connection conn, PreparedStatement pstmt){
         if(pstmt!=null){
             try {
@@ -52,6 +55,7 @@ public class DBConnectionMgr {
             }catch(Exception ex){}
         }
     }//end of freeConnection
+    //세 가지를 반납하는 경우는 select일 때
     public void freeConnection(Connection conn, PreparedStatement pstmt, ResultSet rs){
         if(rs!=null){
             try {
