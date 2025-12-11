@@ -14,8 +14,9 @@ public class ChildJDialog extends JDialog implements ActionListener {
 
     }
     public void initDisplay() {
+        this.setTitle("입력|수정|상세보기");
         this.setSize(300, 300);
-        this.setVisible(true);
+        this.setVisible(false);
         //this.dispose();
 
     }
