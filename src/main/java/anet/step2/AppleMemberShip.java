@@ -29,6 +29,9 @@ public class AppleMemberShip extends JDialog implements ActionListener {
     JButton jbtn_ins = new JButton("등록");
     JButton jbtn_close = new JButton("닫기");
     AppleZipCodeV2 azc = new AppleZipCodeV2(this);
+    public AppleMemberShip() {
+        initDisplay();
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();

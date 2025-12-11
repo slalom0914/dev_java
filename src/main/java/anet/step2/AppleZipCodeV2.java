@@ -111,7 +111,20 @@ public class AppleZipCodeV2 extends JFrame implements ActionListener
     }
     @Override
     public void mousePressed(MouseEvent e) {
-    }
+        if(e.getClickCount()==2){
+            System.out.println("더블클릭");
+            int index = jtb_zipcode.getSelectedRow();
+            Object obj = dtm_zipcode.getValueAt(index,0);
+            int zipcode = Integer.parseInt(obj.toString());
+            String address = (String) dtm_zipcode.getValueAt(index,1);
+            ams.jtf_zipcode.setText(String.valueOf(zipcode));
+            ams.jtf_address.setText(address);
+            //만일 한 번 사용하고 다시 사용할 일이 없다면 종료시킴
+            //System.exit(0); 가상머신과의 연결고리 끊김
+            //this.setVisible(false);
+            this.dispose();
+        }
+    }//end of mousePressed
     @Override
     public void mouseReleased(MouseEvent e) {
     }
