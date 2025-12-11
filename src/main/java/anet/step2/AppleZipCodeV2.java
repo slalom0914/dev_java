@@ -38,10 +38,18 @@ public class AppleZipCodeV2 extends JFrame implements ActionListener
             ,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     String zdos[] = null;//new String[]{"서울","경기","인천"};
     AppleDao appleDao = new AppleDao();//디폴트 생성자로 변경함.
+    AppleMemberShip ams = null;
     public AppleZipCodeV2() {
         //화면이 열리자 마자 시도 정보를 가져와서 JComboBox데이터셋 초기화
         zdos = appleDao.getZdoList();
         //logger(zdos3.length);//17출력
+    }
+    public AppleZipCodeV2(AppleMemberShip ams) {
+        //회원가입 페이지에서 우편번호 검색창을 열때 오라클 서버를 경유 해야 함.
+        //왜냐하면 44번 라인에서 zdos[]에 대한 초기화가 일어남
+        //이 부분을 생략하면 NullPointerException 같은 예외 발생함.
+        this();
+        this.ams = ams;
     }
     //zdo는 콤보박스에서 item을 클릭했을 때(즉 상태값이 변경되었을 때)
     public void refreshData(String zdo, String dong){

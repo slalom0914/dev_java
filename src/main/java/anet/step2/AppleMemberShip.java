@@ -28,9 +28,14 @@ public class AppleMemberShip extends JDialog implements ActionListener {
     JPanel jp_south = new JPanel();
     JButton jbtn_ins = new JButton("등록");
     JButton jbtn_close = new JButton("닫기");
+    AppleZipCodeV2 azc = new AppleZipCodeV2(this);
     @Override
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();
+        if(obj == jbtn_zipcode){
+            //우편번호 검색창 열기
+            azc.initDisplay();
+        }
     }//end of actionPerformed
     public static void main(String[] args) {
         AppleMemberShip appleMemberShip = new AppleMemberShip();
