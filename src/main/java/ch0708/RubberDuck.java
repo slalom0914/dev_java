@@ -7,11 +7,17 @@ public class RubberDuck extends Duck {
     //특성을 결정지을 수 있다.
     public RubberDuck() {
         flyBehavior = new FlyNoWay();
+        quackBehavior = new Squeak();
         //flyBehavior = new FlyWithWing();
     }
     @Override
     public void fly() {
         flyBehavior.fly();//나는 날지 못합니다.
+    }
+
+    @Override
+    public void quack() {
+        quackBehavior.quack();
     }
 
     @Override

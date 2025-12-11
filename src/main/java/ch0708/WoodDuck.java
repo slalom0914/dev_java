@@ -11,6 +11,12 @@ public class WoodDuck extends Duck{
     }
 
     @Override
+    public void quack() {
+        quackBehavior.quack();
+    }
+
+
+    @Override
     public void display() {
         System.out.println("나는 나무오리 입니다.");
     }

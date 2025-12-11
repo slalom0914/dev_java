@@ -13,6 +13,7 @@ public class DuckSimulation {
         Duck himDuck = new WoodDuck();
         himDuck.fly();//나는 날지 못합니다.
         himDuck.display();//나는 나무오리 입니다.
+        himDuck.quack();
         Duck herDuck = new RubberDuck();
         herDuck.fly();
     }
