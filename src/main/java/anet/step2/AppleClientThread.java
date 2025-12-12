@@ -24,6 +24,26 @@ public class AppleClientThread extends Thread {
                     protocol = Integer.parseInt(st.nextToken());//100, 200, 500
                 }//end of if
                 switch(protocol){
+                    case Protocol.CHANGE:{
+                        String nickName = st.nextToken();
+                        String afterName = st.nextToken();
+                        String message = st.nextToken();
+                        //DefaultTableModel에 있는 대화명 변경하기
+                        for(int i=0;i<ac.dtm.getRowCount();i++){
+                            //대화명을 변경하기 전에 현재 테이블에서 가져온 대화명을 받기
+                            String cname = (String)ac.dtm.getValueAt(i,0);
+                            if(cname.equals(nickName)){
+                                ac.dtm.setValueAt(afterName,i,0);
+                                break;//for문을 빠져 나옴
+                            }
+                        }//end of for
+                        ac.jta_display.append(message+"\n");
+                        //열린 채팅창의 타이틀 바에 적힌 대화명도 변경하기
+                        if(nickName.equals(ac.nickName)){
+                            ac.setTitle(afterName+"님의 대화창");
+                            ac.nickName = afterName;
+                        }
+                    }break;
                     case Protocol.ROOM_IN:{
                         String nickName = st.nextToken();
                         ac.jta_display.append(nickName+"님이 입장하였습니다.\n");

@@ -59,6 +59,17 @@ public class AppleServerThread extends Thread {
                     protocol = Integer.parseInt(st.nextToken());
                 }//end of if
                 switch(protocol){
+                    case Protocol.CHANGE:{
+                        //주의 :  서버측에서 관리되는 대화명도 변경 처리 해야 함.
+                        String nickName = st.nextToken();
+                        String afterName = st.nextToken();
+                        String message = st.nextToken();
+                        this.nickName = afterName;
+                        broadCasting(Protocol.CHANGE
+                                    +"#"+nickName
+                                    +"#"+afterName
+                                    +"#"+message);
+                    }break;
                     case Protocol.WHISPER:{//1:1대화
                         //보내는 사람
                         //nextToken사용하면 커서처럼 위치 정보가 바뀌므로 다음정보가 대기

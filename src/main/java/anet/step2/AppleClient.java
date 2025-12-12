@@ -54,7 +54,25 @@ public class AppleClient extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();
         String msg = jtf_msg.getText();
-        if(obj == jbtn_one){
+        if(obj == jbtn_change) {
+            //변경할 대화명을 입력 받아야 한다.
+            String afterName = JOptionPane.showInputDialog("변경할 대화명을 입력하세요.");
+            //대화명이 널 이거나 문자열의 길이가 얼마인지 체크 - 입력한 값에 대한 유효성 검사(Front-End)
+            if(afterName == null || afterName.length() == 0) {
+                JOptionPane.showMessageDialog(this
+                        , "변경할 대화명을 입력하세요","warn", JOptionPane.WARNING_MESSAGE);
+                return;//actionPerformed() 탈출한다.
+            }//end of if
+            try {
+                oos.writeObject(Protocol.CHANGE
+                        +"#"+nickName+"#"+afterName
+                        +"#"+nickName+"님의 대화명이 "+afterName+"으로 변경"
+                );
+            }catch(Exception ex) {
+                ex.printStackTrace();
+                logger(ex.toString());//XXXException
+            }
+        }else if(obj == jbtn_one){
             int row = jtb.getSelectedRow();
             //상대를 선택하지 않았을 때
             if(row == -1){
