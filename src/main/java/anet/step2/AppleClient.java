@@ -30,8 +30,8 @@ public class AppleClient extends JFrame implements ActionListener {
     JButton 	jbtn_send 		= new JButton("전송");
     JPanel 		jp_second 		= new JPanel();
     JPanel 		jp_second_south = new JPanel();
-    String      cols[] = {"대화명"};
-    String      data[][] = new String[0][1];
+    String      cols[] = {"아이디","대화명"};
+    String      data[][] = new String[0][2];
     DefaultTableModel dtm = new DefaultTableModel(data,cols);
     JTable jtb = new JTable(dtm);
     JScrollPane jsp 	= new JScrollPane(jtb
@@ -45,8 +45,10 @@ public class AppleClient extends JFrame implements ActionListener {
     JButton jbtn_exit 		= new JButton("종료");
 
     String nickName = null;
-    public AppleClient(String nickName) {
-        this.nickName = nickName;
+    String[] user = null;
+    public AppleClient(String[] user) {
+        this.nickName = user[1];
+        this.user = user;
         initDisplay();
         init();
     }
@@ -63,6 +65,7 @@ public class AppleClient extends JFrame implements ActionListener {
                         , "변경할 대화명을 입력하세요","warn", JOptionPane.WARNING_MESSAGE);
                 return;//actionPerformed() 탈출한다.
             }//end of if
+            //오라클 서버에 접속하여 새로 입력받은 대화명으로 수정하기
             try {
                 oos.writeObject(Protocol.CHANGE
                         +"#"+nickName+"#"+afterName
@@ -138,7 +141,7 @@ public class AppleClient extends JFrame implements ActionListener {
 
     }
     public static void main(String[] args) {
-        //AppleClient appleClient = new AppleClient("apple");
+        AppleClient appleClient = new AppleClient(new String[]{"kiwi","키위나무"});
     }
     public void initDisplay(){
         JFrame.setDefaultLookAndFeelDecorated(true);

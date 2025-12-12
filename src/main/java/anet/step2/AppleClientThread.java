@@ -48,9 +48,10 @@ public class AppleClientThread extends Thread {
                         String nickName = st.nextToken();
                         ac.jta_display.append(nickName+"님이 입장하였습니다.\n");
                         logger(nickName+"님이 입장하였습니다.");
-                        Vector<String> v = new Vector<String>();
-                        v.add(nickName);
-                        ac.dtm.addRow(v);
+                        logger(ac.user[0]+", "+ac.user[1]);
+                        //Vector<String> v = new Vector<String>();
+                        //v.add(nickName);
+                        ac.dtm.addRow(ac.user);
                     }break;
                     case Protocol.MESSAGE:{//200#키위#오늘 스터디할까?
                         String nickName = st.nextToken();

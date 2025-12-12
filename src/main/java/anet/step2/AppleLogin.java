@@ -33,10 +33,11 @@ public class AppleLogin extends JFrame implements ActionListener {
             //사용자가 입력한 비번 담기
             String mem_pw = jtf_pw.getText();
             AppleDaoV2 aDao = new  AppleDaoV2();
-            nickName = aDao.login(mem_id,mem_pw);
+            String[] user = aDao.login(mem_id,mem_pw);
+            nickName = user[1];
             //AppleClient 인스턴스화 할 때 조회된 대화명을 넘겨야 함.
             this.dispose();
-            ac = new AppleClient(nickName);
+            ac = new AppleClient(user);
         }//end of 로그인
         //회원가입 요청
         else if(obj == jbtn_join) {
