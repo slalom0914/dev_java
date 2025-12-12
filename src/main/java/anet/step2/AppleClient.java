@@ -129,6 +129,8 @@ public class AppleClient extends JFrame implements ActionListener {
         jtf_msg.addActionListener(this);
         jbtn_send.addActionListener(this);
         jbtn_exit.addActionListener(this);
+        jbtn_one.addActionListener(this);
+        jbtn_change.addActionListener(this);
         jbtn_one.setBackground(new Color(158,9,9));
         jbtn_one.setForeground(new Color(212,212,212));
         jbtn_change.setBackground(new Color(7,84,170));
