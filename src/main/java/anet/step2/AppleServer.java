@@ -24,10 +24,8 @@ public class AppleServer extends JFrame implements Runnable {
     Font f = new Font("돋움체", Font.BOLD,20);
     @Override
     public void run() {
-        //globalList = new ArrayList<>();
-        //메모리는 할당되었지만 현재 아무것도 없는 상태이다.
+        logger("run() 호출");
         globalList = new ArrayList<>();
-        System.out.println(globalList.size());//0
         try{
             //서버소켓 생성하기
             server = new ServerSocket(5000);
@@ -36,9 +34,14 @@ public class AppleServer extends JFrame implements Runnable {
             while(true){
                 //서버소켓에 접속해온 클라이언트 소켓에 대한 정보 받아내기
                 //여기에서 waiting상태가 됨
-                client = server.accept();
+                //대기상태에서 탈출하는 시점은 Client클래스에서
+                //new Socket(ip, port)했을 때 39번이 낚아챈다.
+                client = server.accept();//TCP(전송계층)-> IP(인터넷계층)
                 //누눈가 입장했다면 클라이언트 정보를 읽기
-                jta_log.append(client+"\n");
+                //포트 번호는 1~65,535사이번호를 사용 가능함.
+                //단 1~1023번까지는 OS가 사용하므로 다른 번호를 이용함.
+                //ACK -> SYN-ACK -> ACK
+                jta_log.append(client+"\n");//서버포트번호와 클라이언트 할당된 포트번호 두개가 출력
 //                System.out.println(client.getInetAddress());
                 //클라이언트에 대한 소켓 정보를 얻어내면 BananaServerThread에게
                 //제어권을 넘겨서 채팅기능을 구현해 본다

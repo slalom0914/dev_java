@@ -54,8 +54,32 @@ public class AppleClient extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();
         String msg = jtf_msg.getText();
+        if(obj == jbtn_one){
+            int row = jtb.getSelectedRow();
+            //상대를 선택하지 않았을 때
+            if(row == -1){
+                JOptionPane.showMessageDialog(this
+                        ,"상대를 선택하세요","info"
+                        ,JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            //상대를 선택했을 때
+            else{
+                String name = dtm.getValueAt(row, 0).toString();
+                //메세지를 입력하세요
+                String msg1 = JOptionPane.showInputDialog("메시지를 입력하세요");
+                try {
+                    oos.writeObject(Protocol.WHISPER+"#"+nickName+"#"+name+"#"+msg1);
+                }catch(Exception ex) {
+                    System.out.println(ex.getMessage());
+                }//end of try..catch
+                //상대를 선택하고 메시지를 전송한 다음에 선택한 로우 초기화 하기
+                jtb.clearSelection();
+                //ObjectOutputStream, ObjectInputStream, 직렬화지원, 보안
+            }//end of else
+        }
         //전송 버튼을 눌렀을 때 와 메시지 입력 후 엔터 쳤을 때
-        if(obj == jtf_msg || obj == jbtn_send){
+        else if(obj == jtf_msg || obj == jbtn_send){
             if(msg == null || msg.length() == 0){
                 JOptionPane.showMessageDialog(this,"메시지를 입력하세요");
                 return;//actionPerformed탈출함.

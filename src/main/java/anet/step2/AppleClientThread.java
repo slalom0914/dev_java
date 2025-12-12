@@ -24,7 +24,7 @@ public class AppleClientThread extends Thread {
                     protocol = Integer.parseInt(st.nextToken());//100, 200, 500
                 }//end of if
                 switch(protocol){
-                    case 100:{
+                    case Protocol.ROOM_IN:{
                         String nickName = st.nextToken();
                         ac.jta_display.append(nickName+"님이 입장하였습니다.\n");
                         logger(nickName+"님이 입장하였습니다.");
@@ -32,16 +32,27 @@ public class AppleClientThread extends Thread {
                         v.add(nickName);
                         ac.dtm.addRow(v);
                     }break;
-                    case 200:{//200#키위#오늘 스터디할까?
+                    case Protocol.MESSAGE:{//200#키위#오늘 스터디할까?
                         String nickName = st.nextToken();
                         String message = st.nextToken();
                         ac.jta_display.append("[ "+nickName+" ] "+message+"\n");
                         logger("[ "+nickName+" ] "+message);
                         ac.jta_display.setCaretPosition(ac.jta_display.getDocument().getLength());
                     }break;
+                    //-> 300#누가#누구에게#메시지
+                    case Protocol.WHISPER:{
+                        logger("1:1대화");
+                        String nickName = st.nextToken();
+                        String otherName = st.nextToken();
+                        String message = st.nextToken();
+                        ac.jta_display.append(nickName+"님이 "
+                                +otherName+"님에게 "+message+"\n");
+                        //커서 이동이 자동으로 처리되도록 하기
+                        ac.jta_display.setCaretPosition(ac.jta_display.getDocument().getLength());
+                    }break;
                     //case문 마다 {}로 스코프 준 이유는 우리가 같은 프로토콜정보를 사용하므로
                     //동일한 이름의 변수 사용이 불가피하다.- 그래서 사용함.
-                    case 500:{
+                    case Protocol.ROOM_OUT:{
                         String nickName = st.nextToken();
                         ac.jta_display.append(nickName+"님이 퇴장하였습니다.\n");
                         ac.jta_display.setCaretPosition(ac.jta_display.getDocument().getLength());
