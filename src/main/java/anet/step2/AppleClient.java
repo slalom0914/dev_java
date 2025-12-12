@@ -46,6 +46,7 @@ public class AppleClient extends JFrame implements ActionListener {
 
     String nickName = null;
     String[] user = null;
+    AppleDaoV2 aDao = new AppleDaoV2();
     public AppleClient(String[] user) {
         this.nickName = user[1];
         this.user = user;
@@ -66,6 +67,14 @@ public class AppleClient extends JFrame implements ActionListener {
                 return;//actionPerformed() 탈출한다.
             }//end of if
             //오라클 서버에 접속하여 새로 입력받은 대화명으로 수정하기
+            int result = -1;
+            try{
+                result = aDao.nickNameChange(user[0], afterName);
+                logger("result 1이면 수정 성공,0이면 수정실패 : "+result);
+            }catch (Exception ex){
+                logger(ex.getMessage());
+            }
+            ////////////// [[  서버소켓 전송하기  ]] ////////////////
             try {
                 oos.writeObject(Protocol.CHANGE
                         +"#"+nickName+"#"+afterName

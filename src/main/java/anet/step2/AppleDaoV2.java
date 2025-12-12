@@ -27,8 +27,8 @@ public class AppleDaoV2 {
         int result = -1;
         StringBuilder sql = new StringBuilder();
         sql.append("UPDATE member         ");
-        sql.append(" set  mem_nickname = ?");
-        sql.append(" WHERE mem_nickname = ?");
+        sql.append(" set  mem_nickname = ?");//첫번째 ?자리는 새로운 대화명 입력
+        sql.append(" WHERE mem_id = ?");//두번째 ?자리는 pk인 아이디 입력
         try {
             con = dbMgr.getConnection();
             pstmt = con.prepareStatement(sql.toString());
