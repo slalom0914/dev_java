@@ -9,6 +9,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import static util.CustomLogger.logger;
+
 //디폴트 생성자는 생략이 가능한데 왜냐면 JVM이 대신 해줄 수 있다.
 //단 파라미터가 있는 생성자 경우 예측할 수  없다.
 //파라미터가 있는 생성자의 경우 개발자가 결정해준다.
@@ -50,11 +52,33 @@ public class AppleClient extends JFrame implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        Object obj = e.getSource();
+        String msg = jtf_msg.getText();
+        //전송 버튼을 눌렀을 때 와 메시지 입력 후 엔터 쳤을 때
+        if(obj == jtf_msg || obj == jbtn_send){
+            if(msg == null || msg.length() == 0){
+                JOptionPane.showMessageDialog(this,"메시지를 입력하세요");
+                return;//actionPerformed탈출함.
+            }
+            try {
+                oos.writeObject(200+"#"+nickName+"#"+msg);
+                jtf_msg.setText("");
+            }catch(Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        }//end of 엔터쳤을 때와 전송버튼 클릭했을 때
+        else if(obj == jbtn_exit){
+            try{
+                oos.writeObject(500+"#"+nickName);
+                System.exit(0);//JVM와 연결을 끊음- 스레드 회수, 어플리케이션 종료
+            }catch(Exception ex){
+                System.out.println(ex.getMessage());
+            }
+        }//end of 나가기
     }
     //아래 메서드가 화면 그리기 보다 먼저 호출되면 화면은 못 볼 수  있다.
     public void init(){
-
+        logger("init()");
         try{
             //예외가 발생할 가능성이 있는 코드
             //소켓 객체 인스턴스화 하기(서버에 accept당함)
@@ -75,6 +99,7 @@ public class AppleClient extends JFrame implements ActionListener {
         //AppleClient appleClient = new AppleClient("apple");
     }
     public void initDisplay(){
+        JFrame.setDefaultLookAndFeelDecorated(true);
         //어플리케이션 닫을 때 프로세서 종료처리
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jtf_msg.addActionListener(this);

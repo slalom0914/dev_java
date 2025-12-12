@@ -35,6 +35,7 @@ public class AppleLogin extends JFrame implements ActionListener {
             AppleDaoV2 aDao = new  AppleDaoV2();
             nickName = aDao.login(mem_id,mem_pw);
             //AppleClient 인스턴스화 할 때 조회된 대화명을 넘겨야 함.
+            this.dispose();
             ac = new AppleClient(nickName);
         }//end of 로그인
         //회원가입 요청
